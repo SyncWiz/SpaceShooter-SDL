@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Engine.h"
-#include "ModuleInput.h";
+#include "ModuleInput.h"
+#include "ModuleCollision.h"
 #include <SDL_scancode.h>
 
 bool Player::Init()
@@ -18,6 +19,8 @@ bool Player::Init()
     m_IdleAnimation.m_Speed = 0.15f;
 
     SetCurrentAnimation(&m_IdleAnimation);
+
+    m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
 
     Entity::Init();
     return true;

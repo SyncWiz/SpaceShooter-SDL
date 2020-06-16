@@ -94,5 +94,5 @@ void Engine::SetupMainGameScene()
 {
     LOG("Setup Main Game");
     m_Modules.push_back(m_SpaceScene = new Scene("Assets/Background/background.jpg", 2, false));
-    m_SpaceScene->AddEntity(new Player(5, 2, "Assets/Player/Animation/spaceship_idle.png", fPoint(0.2f, 0.2f), iPoint(350, 500), m_SpaceScene));
+    m_SpaceScene->AddEntity(new Player(100, 100, 5, 2, "Assets/Player/Animation/spaceship_idle.png", fPoint(0.2f, 0.2f), iPoint(350, 500), m_SpaceScene));
 }

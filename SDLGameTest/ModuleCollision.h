@@ -29,7 +29,7 @@ struct Collider
         m_Rect(rectangle), m_Type(type), m_CallbackEntity(callback)
     {}
 
-    void SetPos(int x, int y)
+    void SetPosition(int x, int y)
     {
         m_Rect.x = x;
         m_Rect.y = y;

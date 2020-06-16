@@ -41,11 +41,8 @@ public:
         m_TextureScale.y = y;
     }
 
-    void SetPosition(int x, int y)
-    {
-        m_Position.x = x;
-        m_Position.y = y;
-    }
+    void SetPosition(int x, int y);
+
 
     void SetCurrentAnimation(Animation* animation)
     {
@@ -63,4 +60,5 @@ protected:
     SDL_Texture* m_EntityTexture;
     Scene* m_Scene;
     bool m_Active = false;
+    Collider* m_Collider;
 };

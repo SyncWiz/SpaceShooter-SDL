@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
+#include "ModuleCollision.h"
 
 #include <SDL_image.h>
 
@@ -27,4 +28,12 @@ bool Entity::Update()
        
     }
     return true;
+}
+
+void Entity::SetPosition(int x, int y)
+{
+    m_Position.x = x;
+    m_Position.y = y;
+
+    m_Collider->SetPosition(x, y);
 }
