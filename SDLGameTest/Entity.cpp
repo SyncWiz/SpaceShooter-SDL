@@ -25,8 +25,14 @@ bool Entity::Update()
         {
             Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
         }
-       
     }
+    return !m_ToDelete;
+}
+
+bool Entity::CleanUp()
+{
+    Engine::Instance()->m_Collisions->RemoveCollider(m_Collider);
+    RELEASE(m_Collider);
     return true;
 }
 

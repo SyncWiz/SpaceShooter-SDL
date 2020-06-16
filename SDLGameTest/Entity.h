@@ -27,13 +27,7 @@ public:
 
     virtual bool Init();
     virtual bool Update();
-    virtual bool CleanUp()
-    {
-        //Textures are shared, we release them when changing the scene
-        RELEASE(m_TexturePath);
-        RELEASE(m_CurrentAnimation);
-        return true;
-    }
+    virtual bool CleanUp();
 
     void SetScale(float x, float y)
     {
@@ -49,6 +43,16 @@ public:
         m_CurrentAnimation = animation;
     }
 
+    void ToDelete()
+    {
+        m_ToDelete = true;
+    }
+
+    Scene* GetScene()
+    {
+        return m_Scene;
+    }
+
     virtual void OnCollision(Collider* col1, Collider* col2)
     {}
 
@@ -59,6 +63,7 @@ protected:
     const char* m_TexturePath;
     SDL_Texture* m_EntityTexture;
     Scene* m_Scene;
-    bool m_Active = false;
+    bool m_Active = true;
+    bool m_ToDelete = false;
     Collider* m_Collider;
 };

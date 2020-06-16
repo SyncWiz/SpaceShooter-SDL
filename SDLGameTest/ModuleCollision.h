@@ -11,6 +11,8 @@ enum ColliderType
     COLLIDER_NONE = -1,
     COLLIDER_PLAYER,
     COLLIDER_ENEMY,
+    COLLIDER_BULLET_PLAYER,
+    COLLIDER_BULLET_ENEMY,
 
     COLLIDER_MAX
 };
@@ -22,7 +24,6 @@ struct Collider
     bool m_Delete = false;
     ColliderType m_Type;
 
-    //TODO: DCERVERA ADD ENTITIES HERE INSTEAD OF MODULES
     Entity* m_CallbackEntity;
 
     Collider(SDL_Rect rectangle, ColliderType type, Entity* callback = NULL) :
@@ -61,6 +62,7 @@ public:
     bool CleanUp() override;
 
     Collider* AddCollider(const SDL_Rect& rect, ColliderType type, Entity* callback);
+    void RemoveCollider(Collider* collider);
 #ifdef _DEBUG
     void DebugDraw();
 #endif

@@ -18,12 +18,12 @@ public:
 
     bool Init() override;
     bool Update() override;
-    bool CleanUp() override;
     void OnCollision(Collider* col1, Collider* col2) override;
 
 private:
     void HandleInput();
     void Move();
+    void Shoot();
 
 private:
     Animation m_IdleAnimation;
@@ -32,4 +32,7 @@ private:
     int m_Width = 0;
     int m_Height = 0;
     iPoint m_Direction{ 0 , 0 };
+    double m_CurrentTimeToShoot = 0;
+    double m_TimeBetweenShoots = 200;
+    bool m_CanShoot = true;
 };

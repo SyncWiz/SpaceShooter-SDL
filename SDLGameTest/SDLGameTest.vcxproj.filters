@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Engine\Animation">
       <UniqueIdentifier>{8fd992c5-4019-4416-9fdc-ed5447aecd5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Player">
+      <UniqueIdentifier>{6a4f7c8f-4f4a-4d5d-9d94-4ca4b7138eba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,6 +67,9 @@
       <Filter>Source Files\Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,13 +119,16 @@
     <ClInclude Include="Utils.h">
       <Filter>Source Files\Engine\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Source Files\Engine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="GameConfig.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

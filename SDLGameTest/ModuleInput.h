@@ -41,6 +41,6 @@ public:
     bool GetWindowEvent(EventWindow code) const;
 
 private:
-    bool		m_WindowEvents[WE_COUNT];
+    bool      m_WindowEvents[WE_COUNT];
     KeyState* m_Keyboard;
 };

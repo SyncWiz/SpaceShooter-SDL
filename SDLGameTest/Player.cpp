@@ -3,6 +3,9 @@
 #include "ModuleInput.h"
 #include "ModuleCollision.h"
 #include <SDL_scancode.h>
+#include "Scene.h"
+#include "Bullet.h"
+#include "GameConfig.h"
 
 bool Player::Init()
 {
@@ -22,23 +25,22 @@ bool Player::Init()
 
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
 
-    Entity::Init();
-    return true;
+    return Entity::Init();
 }
 
 bool Player::Update()
 {
     HandleInput();
     Move();
+    if (m_CurrentTimeToShoot >= m_TimeBetweenShoots)
+    {
+        m_CanShoot = true;
+        m_CurrentTimeToShoot = 0;
+    }
 
-    Entity::Update();
-    return true;
-}
+    m_CurrentTimeToShoot += Engine::Instance()->GetDT();
 
-bool Player::CleanUp()
-{
-    Entity::Update();
-    return false;
+    return Entity::Update();
 }
 
 void Player::OnCollision(Collider* col1, Collider* col2)
@@ -81,6 +83,11 @@ void Player::HandleInput()
         }
         m_Direction.y = 1;
     }
+
+    if (Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_REPEAT || Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_DOWN)
+    {
+        Shoot();
+    }
 }
 
 void Player::Move()
@@ -107,4 +114,15 @@ void Player::Move()
     positionX += m_Direction.x * m_HorizontalSpeed;
 
     SetPosition(positionX, positionY);
+}
+
+void Player::Shoot()
+{
+    if (m_CanShoot)
+    {
+        m_Scene->Instantiate<Bullet>(iPoint(0, -1), PLAYER_ALLY_BULLET, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_SPEED, PLAYER_BULLET_PATH, fPoint(PLAYER_BULLET_SCALE, PLAYER_BULLET_SCALE), iPoint(m_Position.x + 5, m_Position.y), m_Scene);
+        m_Scene->Instantiate<Bullet>(iPoint(0, -1), PLAYER_ALLY_BULLET, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_SPEED, PLAYER_BULLET_PATH, fPoint(PLAYER_BULLET_SCALE, PLAYER_BULLET_SCALE), iPoint(m_Position.x + 60, m_Position.y), m_Scene);
+        m_CanShoot = false;
+        m_CurrentTimeToShoot = 0;
+    }
 }

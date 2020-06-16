@@ -25,7 +25,7 @@ bool Scene::Init()
     m_Background = Engine::Instance()->m_Textures->LoadOrGet(m_BackgroundPath);
 
     bool retVal = true;
-    for (Entity* entity :m_Entities)
+    for (Entity* entity : m_Entities)
     {
         retVal = entity->Init();
         ASSERT(retVal);
@@ -46,16 +46,19 @@ UpdateStatus Scene::Update()
     DrawBackground();
 
     bool toDelete = false;
-    for (Entity* entity : m_Entities)
+
+    std::list<Entity*>::iterator entityIterator = m_Entities.begin();
+    while (entityIterator != m_Entities.end())
     {
-        toDelete = false;
-        toDelete = !entity->Update();
-        if (toDelete)
+        if ((*entityIterator)->Update() == false)
         {
-            bool retVal = entity->CleanUp();
-            ASSERT(retVal);
-            RELEASE(entity);
-            m_Entities.remove(entity);
+            (*entityIterator)->CleanUp();
+            RELEASE(*entityIterator);
+            m_Entities.erase(entityIterator++);
+        }
+        else
+        {
+            ++entityIterator;
         }
     }
 
@@ -66,23 +69,12 @@ bool Scene::CleanUp()
 {
     for (Entity* entity : m_Entities)
     {
+        entity->CleanUp();
         RELEASE(entity);
     }
     m_Entities.clear();
 
     return Engine::Instance()->m_Textures->CleanUp();
-}
-
-void Scene::AddEntity(Entity* entityToAdd)
-{
-    m_Entities.push_back(entityToAdd);
-}
-
-template <typename EntityToInstantiate, typename Enable>
-void Scene::Instantiate(EntityToInstantiate* entityToAdd)
-{
-    entityToAdd->Init();
-    m_Entities.push_back(entityToAdd);
 }
 
 void Scene::DrawBackground()
@@ -95,5 +87,5 @@ void Scene::DrawBackground()
 
 void Scene::MoveCamera()
 {
-    Engine::Instance()->m_Renderer->m_Camera.y += m_CameraSpeed /** Engine::Instance()->GetDT()*/;
+    Engine::Instance()->m_Renderer->m_Camera.y += m_CameraSpeed;
 }

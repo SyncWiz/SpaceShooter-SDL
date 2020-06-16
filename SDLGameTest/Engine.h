@@ -2,6 +2,7 @@
 
 #include<list>
 #include "Utils.h"
+#include "SDL.h"
 
 class Module;
 class ModuleRender;
@@ -48,6 +49,6 @@ private:
     static Engine* s_Instance;
     std::list<Module*> m_Modules;
     double m_DT = 0;
-    unsigned int m_Now = 0;
-    unsigned int m_Last = 0;
+    Uint64 m_Now = 0;
+    Uint64 m_Last = 0;
 };

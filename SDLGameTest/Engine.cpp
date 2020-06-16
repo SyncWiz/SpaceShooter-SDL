@@ -20,18 +20,22 @@ Engine* Engine::s_Instance = nullptr;
 Engine::Engine()
 {
     Engine::s_Instance = this;
+
+    //Engine Modules
     m_Modules.push_back(m_Input = new ModuleInput());
     m_Modules.push_back(m_Window = new ModuleWindow());
-
     m_Modules.push_back(m_Renderer = new ModuleRender());
     m_Modules.push_back(m_Textures = new ModuleTextures());
+    m_Modules.push_back(m_Collisions = new ModuleCollision());
+    /////
 
-    //GAME MODULES
+    //Game Modules
     SetupMainGameScene();
     /////
 
-    m_Modules.push_back(m_Collisions = new ModuleCollision());
+    //Engine Modules
     m_Modules.push_back(m_FadeToBlack = new ModuleFadeToBlack());
+    //
 }
 
 Engine::~Engine()
@@ -43,7 +47,7 @@ Engine::~Engine()
 bool Engine::Init()
 {
     bool ret = true;
-    m_Now = (unsigned int) SDL_GetPerformanceCounter();
+    m_Now = SDL_GetPerformanceCounter();
 
     for (list<Module*>::iterator it = m_Modules.begin(); it != m_Modules.end() && ret; ++it)
         ret = (*it)->Init();
@@ -54,7 +58,7 @@ bool Engine::Init()
             ret = (*it)->Start();
     }
 
-    m_FadeToBlack->FadeToBlack(m_SpaceScene, nullptr, 3.0f);
+    m_FadeToBlack->FadeToBlack(m_SpaceScene, nullptr, 2.0f);
 
     return ret;
 }
@@ -64,7 +68,7 @@ UpdateStatus Engine::Update()
     UpdateStatus ret = UpdateStatus::UPDATE_CONTINUE;
 
     m_Last = m_Now;
-    m_Now = (unsigned int) SDL_GetPerformanceCounter();
+    m_Now = SDL_GetPerformanceCounter();
 
     m_DT = ((double) (m_Now - m_Last) * 1000 / (double)SDL_GetPerformanceFrequency());
 
@@ -96,6 +100,6 @@ bool Engine::CleanUp()
 void Engine::SetupMainGameScene()
 {
     LOG("Setup Main Game");
-    m_Modules.push_back(m_SpaceScene = new Scene("Assets/Background/background.jpg", MAIN_GAME_CAMERA_SPEED, false));
-    m_SpaceScene->AddEntity(new Player(PLAYER_COLLIDER_SIZE, PLAYER_COLLIDER_SIZE, PLAYER_HORIZONTAL_SPEED, PLAYER_VERTICAL_SPEED, "Assets/Player/Animation/spaceship_idle.png", fPoint(PLAYER_SCALE, PLAYER_SCALE), iPoint(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y), m_SpaceScene));
+    m_Modules.push_back(m_SpaceScene = new Scene(MAIN_GAME_BACKGROUND_PATH, MAIN_GAME_CAMERA_SPEED, false));
+    m_SpaceScene->AddEntity<Player>(PLAYER_COLLIDER_SIZE, PLAYER_COLLIDER_SIZE, PLAYER_HORIZONTAL_SPEED, PLAYER_VERTICAL_SPEED, PLAYER_SHIP_PATH, fPoint(PLAYER_SCALE, PLAYER_SCALE), iPoint(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y), m_SpaceScene);
 }

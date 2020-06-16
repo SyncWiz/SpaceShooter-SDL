@@ -12,6 +12,9 @@ ModuleCollision::ModuleCollision()
     m_CollisionMatrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
 
     m_CollisionMatrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+
+    m_CollisionMatrix[COLLIDER_BULLET_PLAYER][COLLIDER_PLAYER] = true;
+    m_CollisionMatrix[COLLIDER_PLAYER][COLLIDER_BULLET_PLAYER] = true;
 }
 
 ModuleCollision::~ModuleCollision()
@@ -72,6 +75,11 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ColliderType type, 
     return ret;
 }
 
+void ModuleCollision::RemoveCollider(Collider* collider)
+{
+    m_Colliders.remove(collider);
+}
+
 #ifdef _DEBUG
 void ModuleCollision::DebugDraw()
 {
@@ -84,6 +92,14 @@ void ModuleCollision::DebugDraw()
             break;
 
         case ColliderType::COLLIDER_ENEMY:
+            Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 0, 0, 80);
+            break;
+
+        case ColliderType::COLLIDER_BULLET_PLAYER:
+            Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 0, 255, 0, 80);
+            break;
+
+        case ColliderType::COLLIDER_BULLET_ENEMY:
             Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 0, 0, 80);
             break;
         }
