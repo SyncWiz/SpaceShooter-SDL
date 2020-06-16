@@ -7,8 +7,11 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollision.h"
 #include "Scene.h"
-#include "Player.h"
 #include <SDL_image.h>
+
+//Game
+#include "GameConfig.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -93,6 +96,6 @@ bool Engine::CleanUp()
 void Engine::SetupMainGameScene()
 {
     LOG("Setup Main Game");
-    m_Modules.push_back(m_SpaceScene = new Scene("Assets/Background/background.jpg", 2, false));
-    m_SpaceScene->AddEntity(new Player(100, 100, 5, 2, "Assets/Player/Animation/spaceship_idle.png", fPoint(0.2f, 0.2f), iPoint(350, 500), m_SpaceScene));
+    m_Modules.push_back(m_SpaceScene = new Scene("Assets/Background/background.jpg", MAIN_GAME_CAMERA_SPEED, false));
+    m_SpaceScene->AddEntity(new Player(PLAYER_COLLIDER_SIZE, PLAYER_COLLIDER_SIZE, PLAYER_HORIZONTAL_SPEED, PLAYER_VERTICAL_SPEED, "Assets/Player/Animation/spaceship_idle.png", fPoint(PLAYER_SCALE, PLAYER_SCALE), iPoint(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y), m_SpaceScene));
 }
