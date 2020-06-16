@@ -11,7 +11,7 @@ class Scene : public Module
 {
 public:
 
-    Scene(const char* backgroundPath);
+    Scene(const char* backgroundPath, int cameraSpeed = 0, bool active = true);
     virtual ~Scene();
 
     bool Init() override;
@@ -25,9 +25,12 @@ public:
 
 private:
     void DrawBackground();
+    void MoveCamera();
 
 private:
     std::list<Entity*> m_Entities;
     SDL_Texture* m_Background = nullptr;
     const char* m_BackgroundPath;
+    int m_CameraSpeed = 0;
+    bool m_MoveCamera = false;
 };

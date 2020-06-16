@@ -3,18 +3,22 @@
 #include "Utils.h"
 #include "Point.h"
 #include <stdlib.h>
+#include "Animation.h"
 
 struct Collider;
 struct SDL_Texture;
+
+class Scene;
 
 class Entity
 {
 public:
 
-    Entity(const char* texturePath, const fPoint& textureScale, const iPoint& initialPosition, bool active = true)
+    Entity(const char* texturePath, const fPoint& textureScale, const iPoint& initialPosition, Scene* scene, bool active = true)
         : m_TexturePath(texturePath)
         , m_TextureScale(textureScale)
         , m_Position(initialPosition)
+        , m_Scene(scene)
         , m_Active(active)
     {}
 
@@ -27,6 +31,7 @@ public:
     {
         //Textures are shared, we release them when changing the scene
         RELEASE(m_TexturePath);
+        RELEASE(m_CurrentAnimation);
         return true;
     }
 
@@ -42,13 +47,20 @@ public:
         m_Position.y = y;
     }
 
+    void SetCurrentAnimation(Animation* animation)
+    {
+        m_CurrentAnimation = animation;
+    }
+
     virtual void OnCollision(Collider* col1, Collider* col2)
     {}
 
-private:
-    bool m_Active = false;
+protected:
+    Animation* m_CurrentAnimation = nullptr;
     iPoint m_Position;
     fPoint m_TextureScale;
     const char* m_TexturePath;
     SDL_Texture* m_EntityTexture;
+    Scene* m_Scene;
+    bool m_Active = false;
 };

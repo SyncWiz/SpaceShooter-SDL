@@ -7,6 +7,8 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollision.h"
 #include "Scene.h"
+#include "Player.h"
+#include <SDL_image.h>
 
 using namespace std;
 
@@ -38,6 +40,7 @@ Engine::~Engine()
 bool Engine::Init()
 {
     bool ret = true;
+    m_Now = (unsigned int) SDL_GetPerformanceCounter();
 
     for (list<Module*>::iterator it = m_Modules.begin(); it != m_Modules.end() && ret; ++it)
         ret = (*it)->Init();
@@ -48,12 +51,19 @@ bool Engine::Init()
             ret = (*it)->Start();
     }
 
+    m_FadeToBlack->FadeToBlack(m_SpaceScene, nullptr, 3.0f);
+
     return ret;
 }
 
 UpdateStatus Engine::Update()
 {
     UpdateStatus ret = UpdateStatus::UPDATE_CONTINUE;
+
+    m_Last = m_Now;
+    m_Now = (unsigned int) SDL_GetPerformanceCounter();
+
+    m_DT = ((double) (m_Now - m_Last) * 1000 / (double)SDL_GetPerformanceFrequency());
 
     for (list<Module*>::iterator it = m_Modules.begin(); it != m_Modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
         if ((*it)->IsEnabled() == true)
@@ -82,6 +92,7 @@ bool Engine::CleanUp()
 //Game methods
 void Engine::SetupMainGameScene()
 {
-    m_Modules.push_back(m_SpaceScene = new Scene("Assets/Background/background.jpg"));
-    m_SpaceScene->AddEntity(new Entity("Assets/Player/spaceship.png", fPoint(0.1f, 0.1f), iPoint(0,0)));
+    LOG("Setup Main Game");
+    m_Modules.push_back(m_SpaceScene = new Scene("Assets/Background/background.jpg", 2, false));
+    m_SpaceScene->AddEntity(new Player(5, 2, "Assets/Player/Animation/spaceship_idle.png", fPoint(0.2f, 0.2f), iPoint(350, 500), m_SpaceScene));
 }

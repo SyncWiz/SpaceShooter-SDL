@@ -27,6 +27,8 @@ public:
 
     static Engine* Instance() { ASSERT(s_Instance != nullptr); return s_Instance; }
 
+    double GetDT() const { return m_DT; }
+
 public:
     ModuleRender* m_Renderer;
     ModuleWindow* m_Window;
@@ -45,4 +47,7 @@ private:
 private:
     static Engine* s_Instance;
     std::list<Module*> m_Modules;
+    double m_DT = 0;
+    unsigned int m_Now = 0;
+    unsigned int m_Last = 0;
 };

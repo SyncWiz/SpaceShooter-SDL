@@ -5,8 +5,16 @@
 #include "ModuleRender.h"
 #include <SDL_image.h>
 
-Scene::Scene(const char* backgroundPath) : m_BackgroundPath(backgroundPath), Module()
-{}
+Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active) 
+    : m_BackgroundPath(backgroundPath)
+    , m_CameraSpeed(cameraSpeed)
+    , Module(active)
+{
+    if (m_CameraSpeed != 0)
+    {
+        m_MoveCamera = true;
+    }
+}
 
 Scene::~Scene()
 {}
@@ -31,6 +39,10 @@ bool Scene::Init()
 
 UpdateStatus Scene::Update()
 {
+    if (m_MoveCamera)
+    {
+        MoveCamera();
+    }
     DrawBackground();
 
     bool toDelete = false;
@@ -81,3 +93,7 @@ void Scene::DrawBackground()
     }
 }
 
+void Scene::MoveCamera()
+{
+    Engine::Instance()->m_Renderer->m_Camera.y += m_CameraSpeed /** Engine::Instance()->GetDT()*/;
+}

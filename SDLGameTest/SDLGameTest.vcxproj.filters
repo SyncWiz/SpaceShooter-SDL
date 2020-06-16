@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Engine\Utils">
       <UniqueIdentifier>{5edba3b3-31bb-47a6-b45f-cf619b8af9c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Animation">
+      <UniqueIdentifier>{8fd992c5-4019-4416-9fdc-ed5447aecd5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Source Files\Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Source Files\Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Source Files\Engine\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -14,10 +14,17 @@ bool Entity::Init()
 
 bool Entity::Update()
 {
-    //TODO(decervera) Add animation
     if (m_Active)
     {
-        Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
+        if (m_CurrentAnimation != nullptr)
+        {
+            Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, &(m_CurrentAnimation->GetCurrentFrame()), m_TextureScale.x, m_TextureScale.y);
+        }
+        else
+        {
+            Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
+        }
+       
     }
     return true;
 }

@@ -59,6 +59,7 @@ SDL_Texture* const ModuleTextures::LoadOrGet(const char* path)
 
     if (surface == nullptr)
     {
+        ASSERT(surface != nullptr);
         LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
     }
     else
