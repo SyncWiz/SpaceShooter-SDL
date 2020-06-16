@@ -152,6 +152,8 @@ COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(Tar
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModuleCollision.cpp" />
     <ClCompile Include="ModuleFadeToBlack.cpp" />
@@ -162,7 +164,10 @@ COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(Tar
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Config.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="MathUtils.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCollision.h" />
     <ClInclude Include="ModuleFadeToBlack.h" />
@@ -170,7 +175,9 @@ COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(Tar
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="TemplateUtils.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

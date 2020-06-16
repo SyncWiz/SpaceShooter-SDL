@@ -9,13 +9,13 @@ class ModuleWindow : public Module
 {
 public:
 
-	ModuleWindow();
-	virtual ~ModuleWindow();
+    ModuleWindow();
+    virtual ~ModuleWindow();
 
-	bool Init() override;
-	bool CleanUp() override;
+    bool Init() override;
+    bool CleanUp() override;
 
 public:
-	SDL_Window* m_Window = nullptr;
-	SDL_Surface* m_ScreenSurface = nullptr;
+    SDL_Window* m_Window = nullptr;
+    SDL_Surface* m_ScreenSurface = nullptr;
 };

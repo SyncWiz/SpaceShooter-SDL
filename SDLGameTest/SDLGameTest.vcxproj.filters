@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{853686b5-cf7a-45c3-a500-084c7c7d6003}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Math">
+      <UniqueIdentifier>{5d39a902-716a-4c04-ab98-e1896d596f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utils">
+      <UniqueIdentifier>{5edba3b3-31bb-47a6-b45f-cf619b8af9c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -47,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\Engine\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,8 +89,23 @@
     <ClInclude Include="Scene.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
+    <ClInclude Include="TemplateUtils.h">
       <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtils.h">
+      <Filter>Source Files\Engine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source Files\Engine\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

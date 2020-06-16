@@ -1,11 +1,5 @@
 #pragma once
 
-#define MIN( a, b ) ( ((a) < (b)) ? (a) : (b) )
-#define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
-
-// Useful typedefs ---------
-typedef unsigned int uint;
-
 // Deletes a buffer
 #define RELEASE( x ) \
     {									  \
@@ -26,6 +20,10 @@ typedef unsigned int uint;
 		 }                            \
                               \
 	 }
+
+#define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
+
+void log(const char file[], int line, const char* format, ...);
 
 #ifdef _DEBUG
 #define DEBUG_EXP(exp)              exp
@@ -56,12 +54,3 @@ enum class UpdateStatus
     UPDATE_STOP,
     UPDATE_ERROR
 };
-
-// Configuration -----------
-#define SCREEN_SIZE 1
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-#define FULLSCREEN false
-#define VSYNC true
-#define RENDERER_ACCELERATED true
-#define TITLE "Space Invaders TEST"
