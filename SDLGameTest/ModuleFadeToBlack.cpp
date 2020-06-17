@@ -74,7 +74,7 @@ void ModuleFadeToBlack::FadeToBlack(Scene* sceneOn, Scene* sceneOff, float time)
     this->m_SceneOff = sceneOff;
 }
 
-bool ModuleFadeToBlack::isFading() const
+bool ModuleFadeToBlack::IsFading() const
 {
     return m_StartTime > 0;
 }

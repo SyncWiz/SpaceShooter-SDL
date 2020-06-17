@@ -22,7 +22,7 @@ bool Player::Init()
     m_IdleAnimation.m_Speed = 0.15f;
 
     SetCurrentAnimation(&m_IdleAnimation);
-
+    m_CurrentLifePoints = PLAYER_LIFE_POINTS;
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
 
     return Entity::Init();
@@ -45,6 +45,10 @@ bool Player::Update()
 
 void Player::OnCollision(Collider* col1, Collider* col2)
 {
+    if (col2->m_Type == COLLIDER_BULLET_ENEMY)
+    {
+        ReceiveDamage();
+    }
 }
 
 void Player::HandleInput()
@@ -96,8 +100,12 @@ void Player::Move()
     int positionY = m_Position.y;
     if (m_Direction.y == 0)
     {
-        positionY -= m_VerticalSpeed;
-        
+#ifdef _DEBUG
+        if (MOVE_MAIN_CAMERA)
+#endif
+        {
+            positionY -= m_VerticalSpeed;
+        }
     }
     else
     {
@@ -120,9 +128,22 @@ void Player::Shoot()
 {
     if (m_CanShoot)
     {
-        m_Scene->Instantiate<Bullet>(iPoint(0, -1), PLAYER_ALLY_BULLET, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_SPEED, PLAYER_BULLET_PATH, fPoint(PLAYER_BULLET_SCALE, PLAYER_BULLET_SCALE), iPoint(m_Position.x + 5, m_Position.y), m_Scene);
-        m_Scene->Instantiate<Bullet>(iPoint(0, -1), PLAYER_ALLY_BULLET, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_SPEED, PLAYER_BULLET_PATH, fPoint(PLAYER_BULLET_SCALE, PLAYER_BULLET_SCALE), iPoint(m_Position.x + 60, m_Position.y), m_Scene);
+        Bullet* bullet = m_Scene->Instantiate<Bullet>(iPoint(0, -1), PLAYER_ALLY_BULLET, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_SPEED, PLAYER_BULLET_PATH, fPoint(PLAYER_BULLET_SCALE, PLAYER_BULLET_SCALE), iPoint(m_Position.x + 5, m_Position.y), m_Scene);
+        Bullet* bullet2 = m_Scene->Instantiate<Bullet>(iPoint(0, -1), PLAYER_ALLY_BULLET, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_COLLIDER_SIZE, PLAYER_BULLET_SPEED, PLAYER_BULLET_PATH, fPoint(PLAYER_BULLET_SCALE, PLAYER_BULLET_SCALE), iPoint(m_Position.x + 60, m_Position.y), m_Scene);
+
+        bullet->SetColliderOffset(iPoint{ 5, -8 });
+        bullet2->SetColliderOffset(iPoint{ 5, -8 });
+
         m_CanShoot = false;
         m_CurrentTimeToShoot = 0;
+    }
+}
+
+void Player::ReceiveDamage()
+{
+    m_CurrentLifePoints--;
+    if (m_CurrentLifePoints <= 0)
+    {
+        ToDelete();
     }
 }

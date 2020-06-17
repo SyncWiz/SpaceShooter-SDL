@@ -22,7 +22,7 @@ public:
     void AddEntity(Arguments&&... args);
 
     template<typename EntityToInstantiate, class... Arguments, ENABLE_IF(IS_BASE_OF(Entity, EntityToInstantiate))>
-    void Instantiate(Arguments&&... args);
+    EntityToInstantiate* Instantiate(Arguments&&... args);
 
 private:
     void DrawBackground();
@@ -44,10 +44,11 @@ void Scene::AddEntity(Arguments&&... args)
 }
 
 template <typename EntityToInstantiate, class... Arguments, typename Enable>
-void Scene::Instantiate(Arguments&&... args)
+EntityToInstantiate* Scene::Instantiate(Arguments&&... args)
 {
     EntityToInstantiate* entityToAdd = new EntityToInstantiate(std::forward<Arguments>(args)...);
 
     entityToAdd->Init();
     m_Entities.push_back(entityToAdd);
+    return entityToAdd;
 }

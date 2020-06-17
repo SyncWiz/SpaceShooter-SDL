@@ -60,6 +60,8 @@ public:
         return (x != v.x || y != v.y);
     }
 
+    //
+
     bool IsZero() const
     {
         return (x == 0 && y == 0);
@@ -84,7 +86,12 @@ public:
         return (float)sqrt((x * x) + (y * y));
     }
 
-
+    void Normalize()
+    {
+        float lenght = Length();
+        x = x / lenght;
+        y = y / lenght;
+    }
 };
 
 typedef Point<int> iPoint;

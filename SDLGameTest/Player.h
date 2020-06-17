@@ -24,10 +24,12 @@ private:
     void HandleInput();
     void Move();
     void Shoot();
+    void ReceiveDamage();
 
 private:
     Animation m_IdleAnimation;
     int m_VerticalSpeed = 0;
+    int m_CurrentLifePoints = 0;
     int m_HorizontalSpeed = 0;
     int m_Width = 0;
     int m_Height = 0;

@@ -31,6 +31,4 @@ private:
     int m_Width = 0;
     int m_Height = 0;
     iPoint m_Direction{ 0 , 0 };
-    double m_CurrentTimeToDelete = 0;
-    double m_BulletLifeTime = BULLET_LIFETIME;
 };

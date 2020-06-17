@@ -20,17 +20,30 @@ bool Bullet::Init()
 bool Bullet::Update()
 {
     Move();
-    m_CurrentTimeToDelete += Engine::Instance()->GetDT();
-    if (m_CurrentTimeToDelete >= m_BulletLifeTime)
+    if(MathUtils::IsPointInsideCameraView(m_Position) == false)
     {
         ToDelete();
     }
-
     return Entity::Update();
 }
 
 void Bullet::OnCollision(Collider* col1, Collider* col2)
-{}
+{
+    if (m_PlayerAlly)
+    {
+        if (col2->m_Type == COLLIDER_ENEMY)
+        {
+            ToDelete();
+        }
+    }
+    else
+    {
+        if (col2->m_Type == COLLIDER_PLAYER)
+        {
+            ToDelete();
+        }
+    }
+}
 
 void Bullet::Move()
 {

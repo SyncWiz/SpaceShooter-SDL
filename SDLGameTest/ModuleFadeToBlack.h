@@ -13,7 +13,7 @@ public:
     bool Start() override;
     UpdateStatus Update() override;
     void FadeToBlack(Scene* sceneOn, Scene* sceneOff = nullptr, float time = 1.0f);
-    bool isFading() const;
+    bool IsFading() const;
 
 private:
 

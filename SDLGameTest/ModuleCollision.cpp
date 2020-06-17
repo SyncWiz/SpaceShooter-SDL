@@ -10,11 +10,15 @@ using namespace std;
 ModuleCollision::ModuleCollision()
 {
     m_CollisionMatrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+    m_CollisionMatrix[COLLIDER_ENEMY][COLLIDER_BULLET_PLAYER] = true;
 
     m_CollisionMatrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+    m_CollisionMatrix[COLLIDER_PLAYER][COLLIDER_BULLET_ENEMY] = true;
 
-    m_CollisionMatrix[COLLIDER_BULLET_PLAYER][COLLIDER_PLAYER] = true;
-    m_CollisionMatrix[COLLIDER_PLAYER][COLLIDER_BULLET_PLAYER] = true;
+    m_CollisionMatrix[COLLIDER_BULLET_PLAYER][COLLIDER_ENEMY] = true;
+
+    m_CollisionMatrix[COLLIDER_BULLET_ENEMY][COLLIDER_PLAYER] = true;
+
 }
 
 ModuleCollision::~ModuleCollision()

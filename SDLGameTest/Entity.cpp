@@ -38,8 +38,8 @@ bool Entity::CleanUp()
 
 void Entity::SetPosition(int x, int y)
 {
+    m_Collider->SetPosition(x + m_ColliderOffset.x, y + m_ColliderOffset.y);
+
     m_Position.x = x;
     m_Position.y = y;
-
-    m_Collider->SetPosition(x, y);
 }

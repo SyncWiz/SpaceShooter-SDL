@@ -8,7 +8,8 @@
 
 ModuleRender::ModuleRender() : Module()
 {
-    m_Camera.x = m_Camera.y = 0;
+    m_Camera.x = 0; 
+    m_Camera.y = SCREEN_HEIGHT;
     m_Camera.w = SCREEN_WIDTH * SCREEN_SIZE;
     m_Camera.h = SCREEN_HEIGHT * SCREEN_SIZE;
 }

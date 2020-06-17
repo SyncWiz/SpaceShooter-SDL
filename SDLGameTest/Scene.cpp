@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include <SDL_image.h>
+#include "GameConfig.h"
 
 Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active) 
     : m_BackgroundPath(backgroundPath)
@@ -81,11 +82,16 @@ void Scene::DrawBackground()
 {
     if (m_Background)
     {
-        Engine::Instance()->m_Renderer->Blit(m_Background, 0, 0, NULL, 1, 1);
+        Engine::Instance()->m_Renderer->Blit(m_Background, 0, -800, NULL, 1, 1);
     }
 }
 
 void Scene::MoveCamera()
 {
-    Engine::Instance()->m_Renderer->m_Camera.y += m_CameraSpeed;
+#ifdef _DEBUG
+    if (MOVE_MAIN_CAMERA)
+#endif
+    {
+        Engine::Instance()->m_Renderer->m_Camera.y += m_CameraSpeed;
+    }
 }

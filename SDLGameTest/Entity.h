@@ -43,6 +43,11 @@ public:
         m_CurrentAnimation = animation;
     }
 
+    void SetColliderOffset(const iPoint& offset)
+    {
+        m_ColliderOffset = offset;
+    }
+
     void ToDelete()
     {
         m_ToDelete = true;
@@ -59,6 +64,7 @@ public:
 protected:
     Animation* m_CurrentAnimation = nullptr;
     iPoint m_Position;
+    iPoint m_ColliderOffset;
     fPoint m_TextureScale;
     const char* m_TexturePath;
     SDL_Texture* m_EntityTexture;
