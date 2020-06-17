@@ -28,6 +28,9 @@
 //Enemy
 #define ENEMY_SHIP_PATH "Assets/Enemy/Enemy_animation/enemyship_idle.png"
 #define ENEMY_SHIP_EXPLOSION_PATH "Assets/Enemy/Enemy_animation/enemy_explosion.png"
+#define ENEMY_LIFE_POINTS 10
+#define ENEMY_COLLIDER_SIZE 100
+#define ENEMY_SPEED 4
 
 //Main Scene
 #define MAIN_GAME_CAMERA_SPEED 2

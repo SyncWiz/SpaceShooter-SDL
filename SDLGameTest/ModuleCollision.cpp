@@ -79,11 +79,6 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect, ColliderType type, 
     return ret;
 }
 
-void ModuleCollision::RemoveCollider(Collider* collider)
-{
-    m_Colliders.remove(collider);
-}
-
 #ifdef _DEBUG
 void ModuleCollision::DebugDraw()
 {

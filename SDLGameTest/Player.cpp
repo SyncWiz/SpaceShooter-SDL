@@ -174,7 +174,14 @@ void Player::Move()
 
     positionX += m_Direction.x * m_HorizontalSpeed;
 
-    SetPosition(positionX, positionY);
+    if (MathUtils::IsPointInsideCameraView(iPoint(positionX + 50, positionY + 50)))
+    {
+        SetPosition(positionX, positionY);
+    }
+    else
+    {
+        SetPosition(m_Position.x, m_Position.y - m_VerticalSpeed);
+    }
 }
 
 void Player::Shoot()

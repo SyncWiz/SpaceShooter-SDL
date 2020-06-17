@@ -67,7 +67,6 @@ public:
     bool CleanUp() override;
 
     Collider* AddCollider(const SDL_Rect& rect, ColliderType type, Entity* callback);
-    void RemoveCollider(Collider* collider);
 #ifdef _DEBUG
     void DebugDraw();
 #endif

@@ -89,8 +89,8 @@ public:
     void Normalize()
     {
         float lenght = Length();
-        x = x / lenght;
-        y = y / lenght;
+        x =(TYPE) (x / lenght);
+        y =(TYPE) (y / lenght);
     }
 };
 
