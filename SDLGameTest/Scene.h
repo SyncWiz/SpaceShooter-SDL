@@ -18,6 +18,11 @@ public:
     UpdateStatus Update() override;
     bool CleanUp() override;
 
+    void StopCamera()
+    {
+        m_MoveCamera = false;
+    }
+
     template<typename EntityToAdd, class... Arguments, ENABLE_IF(IS_BASE_OF(Entity, EntityToAdd))>
     void AddEntity(Arguments&&... args);
 

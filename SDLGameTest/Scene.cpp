@@ -44,7 +44,7 @@ UpdateStatus Scene::Update()
     {
         MoveCamera();
     }
-    DrawBackground();
+    //DrawBackground();
 
     bool toDelete = false;
 

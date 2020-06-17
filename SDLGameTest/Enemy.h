@@ -9,13 +9,15 @@ class Enemy : public Entity
     enum class EnemyState
     {
         IDLE,
-        ACTIVE
+        ACTIVE,
+        DYING,
     };
 
 public:
 
-    Enemy(int lifePoints, int width, int height, int speed, const char* texturePath, const fPoint& textureScale, const iPoint& initialPosition, Scene* scene, bool active = true)
+    Enemy(const char* explosionTexturePath, int lifePoints, int width, int height, int speed, const char* texturePath, const fPoint& textureScale, const iPoint& initialPosition, Scene* scene, bool active = true)
         : Entity(texturePath, textureScale, initialPosition, scene, active)
+        , m_ExplosionTexturePath(explosionTexturePath)
         , m_CurrentLifePoints(lifePoints)
         , m_Width(width)
         , m_Height(height)
@@ -33,7 +35,7 @@ private:
     void GenerateTargetPosition();
 
 private:
-    Animation m_IdleAnimation;
+    Animation m_IdleAnimation, m_DieAnimation;
     int m_CurrentLifePoints = 0;
     int m_Speed = 0;
     int m_Width = 0;
@@ -45,4 +47,6 @@ private:
     double m_CurrentTimeToShoot = 0;
     double m_TimeBetweenShoots = 1000;
     bool m_CanShoot = true;
+    const char* m_ExplosionTexturePath;
+    SDL_Texture* m_ExplosionTexture;
 };

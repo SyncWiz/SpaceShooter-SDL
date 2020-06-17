@@ -31,8 +31,7 @@ bool Entity::Update()
 
 bool Entity::CleanUp()
 {
-    Engine::Instance()->m_Collisions->RemoveCollider(m_Collider);
-    RELEASE(m_Collider);
+    m_Collider->ToDelete();
     return true;
 }
 

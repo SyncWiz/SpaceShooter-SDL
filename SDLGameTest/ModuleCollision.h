@@ -46,6 +46,11 @@ struct Collider
         m_Type = type;
     }
 
+    void ToDelete()
+    {
+        m_Delete = true;
+    }
+
     bool CheckCollision(const SDL_Rect& r) const;
 };
 

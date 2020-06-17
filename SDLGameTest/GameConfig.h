@@ -2,6 +2,7 @@
 
 //Player
 #define PLAYER_SHIP_PATH "Assets/Player/Animation/spaceship_idle.png"
+#define PLAYER_EXPLOSION_PATH "Assets/Player/Animation/player_explosion.png"
 #define PLAYER_HORIZONTAL_SPEED 5
 #define PLAYER_VERTICAL_SPEED 2
 #define PLAYER_COLLIDER_SIZE 100
@@ -26,6 +27,7 @@
 
 //Enemy
 #define ENEMY_SHIP_PATH "Assets/Enemy/Enemy_animation/enemyship_idle.png"
+#define ENEMY_SHIP_EXPLOSION_PATH "Assets/Enemy/Enemy_animation/enemy_explosion.png"
 
 //Main Scene
 #define MAIN_GAME_CAMERA_SPEED 2

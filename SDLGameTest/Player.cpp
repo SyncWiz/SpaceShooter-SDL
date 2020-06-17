@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Bullet.h"
 #include "GameConfig.h"
+#include "ModuleTextures.h"
 
 bool Player::Init()
 {
@@ -21,24 +22,66 @@ bool Player::Init()
     m_IdleAnimation.m_Loop = true;
     m_IdleAnimation.m_Speed = 0.15f;
 
+    lenght = 256;
+    m_DieAnimation.m_Frames.push_back({ 0, 0, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, 0, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, 0, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, 0, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, lenght, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, lenght, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght * 2, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght * 2, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, lenght * 2, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, lenght * 2, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght * 3, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght * 3, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, lenght * 3, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, lenght * 3, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght * 4, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght * 4, lenght, lenght });
+
+    m_DieAnimation.m_Loop = false;
+    m_DieAnimation.m_Speed = 0.5f;
+
     SetCurrentAnimation(&m_IdleAnimation);
     m_CurrentLifePoints = PLAYER_LIFE_POINTS;
+
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
+    m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
 
     return Entity::Init();
 }
 
 bool Player::Update()
 {
-    HandleInput();
-    Move();
-    if (m_CurrentTimeToShoot >= m_TimeBetweenShoots)
+    switch (m_CurrentState)
     {
-        m_CanShoot = true;
-        m_CurrentTimeToShoot = 0;
-    }
+        case PlayerState::ACTIVE:
+        {
+            HandleInput();
+            Move();
+            if (m_CurrentTimeToShoot >= m_TimeBetweenShoots)
+            {
+                m_CanShoot = true;
+                m_CurrentTimeToShoot = 0;
+            }
 
-    m_CurrentTimeToShoot += Engine::Instance()->GetDT();
+            m_CurrentTimeToShoot += Engine::Instance()->GetDT();
+        }
+        break;
+
+        case PlayerState::DYING:
+        {
+
+        }
+        break;
+    }
 
     return Entity::Update();
 }
@@ -115,6 +158,16 @@ void Player::Move()
         }
         else
         {
+#ifdef _DEBUG
+            if (MOVE_MAIN_CAMERA == false)
+            {
+                positionY += m_Direction.y * m_VerticalSpeed * 3;
+            }
+            else
+#endif
+            {
+                positionY += m_Direction.y * m_VerticalSpeed;
+            }
             positionY += m_Direction.y * m_VerticalSpeed;
         }
     }
@@ -144,6 +197,12 @@ void Player::ReceiveDamage()
     m_CurrentLifePoints--;
     if (m_CurrentLifePoints <= 0)
     {
-        ToDelete();
+        SetPosition(m_Position.x - 10, m_Position.y - 10);
+        SetCurrentAnimation(&m_DieAnimation);
+        SetScale(0.5f, 0.5f);
+        m_EntityTexture = m_ExplosionTexture;
+        m_Collider->ToDelete();
+        m_Scene->StopCamera();
+        m_CurrentState = PlayerState::DYING;
     }
 }

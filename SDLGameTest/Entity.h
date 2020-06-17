@@ -48,6 +48,11 @@ public:
         m_ColliderOffset = offset;
     }
 
+    void SetCurrentTexture(SDL_Texture* texture)
+    {
+        m_EntityTexture = texture;
+    }
+
     void ToDelete()
     {
         m_ToDelete = true;

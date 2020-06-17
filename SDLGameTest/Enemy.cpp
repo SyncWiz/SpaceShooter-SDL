@@ -2,7 +2,9 @@
 #include "MathUtils.h"
 #include "Engine.h"
 #include "ModuleCollision.h"
+#include "ModuleTextures.h"
 #include "Scene.h"
+
 #include "Bullet.h"
 
 bool Enemy::Init()
@@ -19,9 +21,36 @@ bool Enemy::Init()
     m_IdleAnimation.m_Loop = true;
     m_IdleAnimation.m_Speed = 0.1f;
 
+    lenght = 256;
+    m_DieAnimation.m_Frames.push_back({ 0, 0, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, 0, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, 0, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, 0, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, lenght, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, lenght, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght * 2, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght * 2, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, lenght * 2, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, lenght * 2, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght * 3, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght, lenght * 3, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 2, lenght * 3, lenght, lenght });
+    m_DieAnimation.m_Frames.push_back({ lenght * 3, lenght * 3, lenght, lenght });
+
+    m_DieAnimation.m_Frames.push_back({ 0, lenght * 4, lenght, lenght });
+
+    m_DieAnimation.m_Loop = false;
+    m_DieAnimation.m_Speed = 0.5f;
+
     SetCurrentAnimation(&m_IdleAnimation);
 
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
+    m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
 
     return Entity::Init();
 }
@@ -65,6 +94,16 @@ bool Enemy::Update()
 
             m_CurrentTimeToShoot += Engine::Instance()->GetDT();
 
+            return Entity::Update();
+        }
+        break;
+
+        case EnemyState::DYING:
+        {
+            if (m_CurrentAnimation->Finished())
+            {
+                ToDelete();
+            }
             return Entity::Update();
         }
         break;
@@ -117,7 +156,12 @@ void Enemy::ReceiveDamage()
 
     if (m_CurrentLifePoints <= 0)
     {
-        ToDelete();
+        SetPosition(m_Position.x - 10, m_Position.y -10);
+        SetCurrentAnimation(&m_DieAnimation);
+        SetScale(0.5f, 0.5f);
+        m_EntityTexture = m_ExplosionTexture;
+        m_CurrentState = EnemyState::DYING;
+        m_Collider->ToDelete();
     }
 }
 
