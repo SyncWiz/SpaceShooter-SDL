@@ -15,7 +15,7 @@ bool Entity::Init()
 
 bool Entity::Update()
 {
-    if (m_Active)
+    if (m_Active && !m_ToDelete)
     {
         if (m_CurrentAnimation != nullptr)
         {
@@ -26,18 +26,25 @@ bool Entity::Update()
             Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
         }
     }
-    return !m_ToDelete;
+    return true;
 }
 
 bool Entity::CleanUp()
 {
-    m_Collider->ToDelete();
+    if (m_Collider)
+    {
+        m_Collider->ToDelete();
+    }
+
     return true;
 }
 
 void Entity::SetPosition(int x, int y)
 {
-    m_Collider->SetPosition(x + m_ColliderOffset.x, y + m_ColliderOffset.y);
+    if (m_Collider)
+    {
+        m_Collider->SetPosition(x + m_ColliderOffset.x, y + m_ColliderOffset.y);
+    }
 
     m_Position.x = x;
     m_Position.y = y;

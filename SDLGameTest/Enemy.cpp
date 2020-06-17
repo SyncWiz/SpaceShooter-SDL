@@ -49,7 +49,6 @@ bool Enemy::Init()
 
     SetCurrentAnimation(&m_IdleAnimation);
 
-    m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
     m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
 
     return Entity::Init();
@@ -68,8 +67,9 @@ bool Enemy::Update()
                 {
                     GenerateTargetPosition();
                 }
+                m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
             }
-            return true;
+            return Entity::Update();
         }
         break;
 
@@ -161,7 +161,7 @@ void Enemy::ReceiveDamage()
         SetScale(0.5f, 0.5f);
         m_EntityTexture = m_ExplosionTexture;
         m_CurrentState = EnemyState::DYING;
-        m_Collider->ToDelete();
+        m_Collider->Disable();
     }
 }
 

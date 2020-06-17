@@ -46,10 +46,19 @@ UpdateStatus ModuleCollision::Update()
     for (list<Collider*>::iterator it = m_Colliders.begin(); it != m_Colliders.end(); ++it)
     {
         Collider* previousCollider = *it;
+        if (previousCollider->m_Active == false)
+        {
+            continue;
+        }
         iter = it;
         for (++iter; iter != m_Colliders.end(); ++iter)
         {
             Collider* currentCollider = *iter;
+            if (currentCollider->m_Active == false)
+            {
+                continue;
+            }
+
             if (previousCollider->CheckCollision(currentCollider->m_Rect) == true)
             {
                 if (m_CollisionMatrix[previousCollider->m_Type][currentCollider->m_Type] && previousCollider->m_CallbackEntity)
@@ -84,6 +93,10 @@ void ModuleCollision::DebugDraw()
 {
     for (list<Collider*>::iterator it = m_Colliders.begin(); it != m_Colliders.end(); ++it)
     {
+        if ((*it)->m_Active == false)
+        {
+            continue;
+        }
         switch ((*it)->m_Type)
         {
         case ColliderType::COLLIDER_PLAYER:

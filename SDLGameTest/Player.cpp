@@ -78,7 +78,10 @@ bool Player::Update()
 
         case PlayerState::DYING:
         {
-
+            if (m_CurrentAnimation->Finished())
+            {
+                ToDelete();
+            }
         }
         break;
     }
@@ -208,8 +211,8 @@ void Player::ReceiveDamage()
         SetCurrentAnimation(&m_DieAnimation);
         SetScale(0.5f, 0.5f);
         m_EntityTexture = m_ExplosionTexture;
-        m_Collider->ToDelete();
         m_Scene->StopCamera();
         m_CurrentState = PlayerState::DYING;
+        m_Collider->Disable();
     }
 }

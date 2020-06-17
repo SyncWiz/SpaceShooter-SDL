@@ -38,6 +38,23 @@ bool Scene::Init()
     return true;
 }
 
+UpdateStatus Scene::PreUpdate()
+{
+    for (list<Entity*>::iterator it = m_Entities.begin(); it != m_Entities.end();)
+    {
+        if ((*it)->m_ToDelete == true)
+        {
+            (*it)->CleanUp();
+            RELEASE(*it);
+            it = m_Entities.erase(it);
+        }
+        else
+            ++it;
+    }
+
+    return UpdateStatus::UPDATE_CONTINUE;
+}
+
 UpdateStatus Scene::Update()
 {
     if (m_MoveCamera)
@@ -46,21 +63,9 @@ UpdateStatus Scene::Update()
     }
     //DrawBackground();
 
-    bool toDelete = false;
-
-    std::list<Entity*>::iterator entityIterator = m_Entities.begin();
-    while (entityIterator != m_Entities.end())
+    for (Entity* entity : m_Entities)
     {
-        if ((*entityIterator)->Update() == false)
-        {
-            (*entityIterator)->CleanUp();
-            RELEASE(*entityIterator);
-            m_Entities.erase(entityIterator++);
-        }
-        else
-        {
-            ++entityIterator;
-        }
+        entity->Update();
     }
 
     return UpdateStatus::UPDATE_CONTINUE;

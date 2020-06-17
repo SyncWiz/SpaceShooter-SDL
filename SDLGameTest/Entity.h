@@ -66,6 +66,8 @@ public:
     virtual void OnCollision(Collider* col1, Collider* col2)
     {}
 
+    bool m_ToDelete = false;
+
 protected:
     Animation* m_CurrentAnimation = nullptr;
     iPoint m_Position;
@@ -75,6 +77,5 @@ protected:
     SDL_Texture* m_EntityTexture;
     Scene* m_Scene;
     bool m_Active = true;
-    bool m_ToDelete = false;
     Collider* m_Collider;
 };

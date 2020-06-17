@@ -15,6 +15,7 @@ public:
     virtual ~Scene();
 
     bool Init() override;
+    UpdateStatus PreUpdate() override;
     UpdateStatus Update() override;
     bool CleanUp() override;
 

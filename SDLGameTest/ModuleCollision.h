@@ -22,6 +22,7 @@ struct Collider
 {
     SDL_Rect m_Rect = { 0,0,0,0 };
     bool m_Delete = false;
+    bool m_Active = true;
     ColliderType m_Type;
 
     Entity* m_CallbackEntity;
@@ -49,6 +50,11 @@ struct Collider
     void ToDelete()
     {
         m_Delete = true;
+    }
+
+    void Disable()
+    {
+        m_Active = false;
     }
 
     bool CheckCollision(const SDL_Rect& r) const;

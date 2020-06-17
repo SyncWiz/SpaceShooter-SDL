@@ -27,7 +27,6 @@ Engine::Engine()
     m_Modules.push_back(m_Window = new ModuleWindow());
     m_Modules.push_back(m_Renderer = new ModuleRender());
     m_Modules.push_back(m_Textures = new ModuleTextures());
-    m_Modules.push_back(m_Collisions = new ModuleCollision());
     /////
 
     //Game Modules
@@ -35,6 +34,7 @@ Engine::Engine()
     /////
 
     //Engine Modules
+    m_Modules.push_back(m_Collisions = new ModuleCollision());
     m_Modules.push_back(m_FadeToBlack = new ModuleFadeToBlack());
     //
 }
