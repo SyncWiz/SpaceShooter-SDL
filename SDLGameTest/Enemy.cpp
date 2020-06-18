@@ -7,7 +7,7 @@
 
 #include "Bullet.h"
 
-bool Enemy::Init()
+void Enemy::Init()
 {
     int lenght = 512;
     m_IdleAnimation.m_Frames.push_back({ 0, 0, lenght, lenght });
@@ -51,10 +51,10 @@ bool Enemy::Init()
 
     m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
 
-    return Entity::Init();
+    Entity::Init();
 }
 
-bool Enemy::Update()
+void Enemy::Update()
 {
     switch (m_CurrentState)
     {
@@ -69,7 +69,7 @@ bool Enemy::Update()
                 }
                 m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
             }
-            return Entity::Update();
+            Entity::Update();
         }
         break;
 
@@ -94,7 +94,7 @@ bool Enemy::Update()
 
             m_CurrentTimeToShoot += Engine::Instance()->GetDT();
 
-            return Entity::Update();
+            Entity::Update();
         }
         break;
 
@@ -104,7 +104,7 @@ bool Enemy::Update()
             {
                 ToDelete();
             }
-            return Entity::Update();
+            Entity::Update();
         }
         break;
 
@@ -115,7 +115,6 @@ bool Enemy::Update()
         }
         break;
     }
-    return false;
 }
 
 void Enemy::OnCollision(Collider* col1, Collider* col2)

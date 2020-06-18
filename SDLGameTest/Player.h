@@ -23,8 +23,8 @@ public:
         , m_VerticalSpeed(verticalSpeed)
     {}
 
-    bool Init() override;
-    bool Update() override;
+    void Init() override;
+    void Update() override;
     void OnCollision(Collider* col1, Collider* col2) override;
 
 private:

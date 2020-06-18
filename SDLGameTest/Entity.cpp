@@ -7,13 +7,12 @@
 
 #include <SDL_image.h>
 
-bool Entity::Init()
+void Entity::Init()
 {
     m_EntityTexture = Engine::Instance()->m_Textures->LoadOrGet(m_TexturePath);
-    return true;
 }
 
-bool Entity::Update()
+void Entity::Update()
 {
     if (m_Active && !m_ToDelete)
     {
@@ -26,17 +25,14 @@ bool Entity::Update()
             Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
         }
     }
-    return true;
 }
 
-bool Entity::CleanUp()
+void Entity::CleanUp()
 {
     if (m_Collider)
     {
         m_Collider->ToDelete();
     }
-
-    return true;
 }
 
 void Entity::SetPosition(int x, int y)

@@ -3,7 +3,7 @@
 #include "Engine.h"
 #include "ModuleCollision.h"
 
-bool Bullet::Init()
+void Bullet::Init()
 {
     if (m_PlayerAlly)
     {
@@ -14,17 +14,18 @@ bool Bullet::Init()
         m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_BULLET_ENEMY, this);
     }
 
-    return Entity::Init();
+    Entity::Init();
 }
 
-bool Bullet::Update()
+void Bullet::Update()
 {
     Move();
     if(MathUtils::IsPointInsideCameraView(m_Position) == false)
     {
         ToDelete();
     }
-    return Entity::Update();
+
+    Entity::Update();
 }
 
 void Bullet::OnCollision(Collider* col1, Collider* col2)

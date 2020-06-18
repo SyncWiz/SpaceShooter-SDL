@@ -25,9 +25,9 @@ public:
     virtual ~Entity()
     {}
 
-    virtual bool Init();
-    virtual bool Update();
-    virtual bool CleanUp();
+    virtual void Init();
+    virtual void Update();
+    virtual void CleanUp();
 
     void SetScale(float x, float y)
     {

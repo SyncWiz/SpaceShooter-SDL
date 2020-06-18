@@ -8,7 +8,7 @@
 #include "GameConfig.h"
 #include "ModuleTextures.h"
 
-bool Player::Init()
+void Player::Init()
 {
     int lenght = 512;
     m_IdleAnimation.m_Frames.push_back({ 0, 0, lenght, lenght });
@@ -55,10 +55,10 @@ bool Player::Init()
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
     m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
 
-    return Entity::Init();
+    Entity::Init();
 }
 
-bool Player::Update()
+void Player::Update()
 {
     switch (m_CurrentState)
     {
@@ -86,7 +86,7 @@ bool Player::Update()
         break;
     }
 
-    return Entity::Update();
+    Entity::Update();
 }
 
 void Player::OnCollision(Collider* col1, Collider* col2)

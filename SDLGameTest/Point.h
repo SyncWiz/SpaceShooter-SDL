@@ -81,16 +81,16 @@ public:
         return(*this);
     }
 
-    float Length()
+    TYPE Length()
     {
-        return (float)sqrt((x * x) + (y * y));
+        return (TYPE)sqrt((x * x) + (y * y));
     }
 
     void Normalize()
     {
-        float lenght = Length();
-        x =(TYPE) (x / lenght);
-        y =(TYPE) (y / lenght);
+        TYPE lenght = Length();
+        x =(x / lenght);
+        y =(y / lenght);
     }
 };
 

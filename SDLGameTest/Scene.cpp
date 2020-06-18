@@ -24,16 +24,9 @@ Scene::~Scene()
 bool Scene::Init()
 {
     m_Background = Engine::Instance()->m_Textures->LoadOrGet(m_BackgroundPath);
-
-    bool retVal = true;
     for (Entity* entity : m_Entities)
     {
-        retVal = entity->Init();
-        ASSERT(retVal);
-        if (retVal == false)
-        {
-            return false;
-        }
+        entity->Init();
     }
     return true;
 }
