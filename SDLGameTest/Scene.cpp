@@ -7,9 +7,8 @@
 #include "GameConfig.h"
 #include "SpawnManager.h"
 
-Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active) 
-    : m_BackgroundPath(backgroundPath)
-    , m_CameraSpeed(cameraSpeed)
+Scene::Scene(int cameraSpeed, bool active) 
+    : m_CameraSpeed(cameraSpeed)
     , Module(active)
 {
     if (m_CameraSpeed != 0)
@@ -21,9 +20,8 @@ Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active)
 Scene::~Scene()
 {}
 
-bool Scene::Init()
+bool Scene::Start()
 {
-    m_Background = Engine::Instance()->m_Textures->LoadOrGet(m_BackgroundPath);
     m_SpawnManager = new SpawnManager(this);
 
     if (m_SpawnManager == nullptr)
@@ -42,16 +40,19 @@ bool Scene::Init()
 
 UpdateStatus Scene::PreUpdate()
 {
-    for (list<Entity*>::iterator it = m_Entities.begin(); it != m_Entities.end();)
+    if (m_Active)
     {
-        if ((*it)->m_ToDelete == true)
+        for (list<Entity*>::iterator it = m_Entities.begin(); it != m_Entities.end();)
         {
-            (*it)->CleanUp();
-            RELEASE(*it);
-            it = m_Entities.erase(it);
+            if ((*it)->m_ToDelete == true)
+            {
+                (*it)->CleanUp();
+                RELEASE(*it);
+                it = m_Entities.erase(it);
+            }
+            else
+                ++it;
         }
-        else
-            ++it;
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -59,16 +60,22 @@ UpdateStatus Scene::PreUpdate()
 
 UpdateStatus Scene::Update()
 {
-    m_SpawnManager->Update();
-    if (m_MoveCamera)
+    if (m_Active)
     {
-        MoveCamera();
-    }
-    //DrawBackground();
+        m_SpawnManager->Update();
+        if (m_MoveCamera)
+        {
+            MoveCamera();
+        }
 
-    for (Entity* entity : m_Entities)
-    {
-        entity->Update();
+        for (Entity* entity : m_Entities)
+        {
+            if (entity != nullptr && entity->IsActive())
+            {
+                entity->Update();
+            }
+
+        }
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -87,14 +94,6 @@ bool Scene::CleanUp()
     RELEASE(m_SpawnManager);
 
     return Engine::Instance()->m_Textures->CleanUp();
-}
-
-void Scene::DrawBackground()
-{
-    if (m_Background)
-    {
-        Engine::Instance()->m_Renderer->Blit(m_Background, 0, -800, NULL, 1, 1);
-    }
 }
 
 void Scene::MoveCamera()

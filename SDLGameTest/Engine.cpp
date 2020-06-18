@@ -29,7 +29,7 @@ Engine::Engine()
     /////
 
     //Game Modules
-    SetupMainGameScene();
+    m_Modules.push_back(m_MainGameScene = new Scene(MAIN_GAME_CAMERA_SPEED, true));
     /////
 
     //Engine Modules
@@ -58,7 +58,9 @@ bool Engine::Init()
             ret = (*it)->Start();
     }
 
-    m_FadeToBlack->FadeToBlack(m_SpaceScene, nullptr, 2.0f);
+    //Game
+    m_FadeToBlack->FadeToBlack(m_MainGameScene, nullptr, 2.0f);
+    //
 
     return ret;
 }
@@ -94,12 +96,4 @@ bool Engine::CleanUp()
             ret = (*it)->CleanUp();
 
     return ret;
-}
-
-//Game methods
-void Engine::SetupMainGameScene()
-{
-    LOG("Setup Main Game");
-    m_Modules.push_back(m_SpaceScene = new Scene(MAIN_GAME_BACKGROUND_PATH, MAIN_GAME_CAMERA_SPEED, false));
-    m_SpaceScene->AddEntity<Player>(PLAYER_EXPLOSION_PATH, PLAYER_COLLIDER_SIZE, PLAYER_COLLIDER_SIZE, PLAYER_HORIZONTAL_SPEED, PLAYER_VERTICAL_SPEED, PLAYER_SHIP_PATH, fPoint(PLAYER_SCALE, PLAYER_SCALE), iPoint(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y), m_SpaceScene);
 }

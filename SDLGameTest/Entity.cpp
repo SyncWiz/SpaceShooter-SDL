@@ -14,7 +14,7 @@ void Entity::Init()
 
 void Entity::Update()
 {
-    if (m_Active && !m_ToDelete)
+    if (m_Active)
     {
         if (m_CurrentAnimation != nullptr)
         {

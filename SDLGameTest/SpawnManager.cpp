@@ -7,10 +7,12 @@
 #include "GameConfig.h"
 #include "MathUtils.h"
 #include "ModuleRender.h"
+#include "Player.h"
 
 void SpawnManager::Init()
 {
     m_CameraYOffsetToSpawn = 200;
+    m_Scene->AddEntity<Player>(PLAYER_EXPLOSION_PATH, PLAYER_COLLIDER_SIZE, PLAYER_COLLIDER_SIZE, PLAYER_HORIZONTAL_SPEED, PLAYER_VERTICAL_SPEED, PLAYER_SHIP_PATH, fPoint(PLAYER_SCALE, PLAYER_SCALE), iPoint(PLAYER_INITIAL_POSITION_X, PLAYER_INITIAL_POSITION_Y), m_Scene);
 }
 
 void SpawnManager::Update()

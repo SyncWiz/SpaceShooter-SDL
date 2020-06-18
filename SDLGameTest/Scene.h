@@ -13,10 +13,10 @@ class Scene : public Module
 {
 public:
 
-    Scene(const char* backgroundPath, int cameraSpeed = 0, bool active = true);
+    Scene(int cameraSpeed = 0, bool active = true);
     virtual ~Scene();
 
-    bool Init() override;
+    bool Start() override;
     UpdateStatus PreUpdate() override;
     UpdateStatus Update() override;
     bool CleanUp() override;
@@ -41,7 +41,6 @@ private:
     SDL_Texture* m_Background = nullptr;
     SpawnManager* m_SpawnManager = nullptr;
 
-    const char* m_BackgroundPath;
     int m_CameraSpeed = 0;
     bool m_MoveCamera = false;
 };

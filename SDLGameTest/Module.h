@@ -63,6 +63,6 @@ public:
         return true;
     }
 
-private:
+protected:
     bool m_Active = true;
 };

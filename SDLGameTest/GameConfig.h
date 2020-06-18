@@ -44,7 +44,6 @@
 
 //Main Scene
 #define MAIN_GAME_CAMERA_SPEED 2
-#define MAIN_GAME_BACKGROUND_PATH "Assets/Background/background.jpg"
 #ifdef _DEBUG
 #define MOVE_MAIN_CAMERA true
 #endif

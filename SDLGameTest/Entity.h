@@ -56,11 +56,12 @@ public:
     void ToDelete()
     {
         m_ToDelete = true;
+        m_Active = false;
     }
 
-    Scene* GetScene()
+    bool IsActive()
     {
-        return m_Scene;
+        return m_Active;
     }
 
     virtual void OnCollision(Collider* col1, Collider* col2)

@@ -39,11 +39,7 @@ public:
     ModuleCollision* m_Collisions;
 
     //Game
-    //Scene* m_StartGameScene;
-    Scene* m_SpaceScene;
-
-private:
-    void SetupMainGameScene();
+    Scene* m_MainGameScene;
 
 private:
     static Engine* s_Instance;

@@ -144,6 +144,7 @@ void Player::Move()
 {
     int positionX = m_Position.x;
     int positionY = m_Position.y;
+
     if (m_Direction.y == 0)
     {
 #ifdef _DEBUG
