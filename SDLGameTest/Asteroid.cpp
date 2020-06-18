@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
 #include "Scene.h"
+#include "GameConfig.h"
 
 void Asteroid::Init()
 {
@@ -35,24 +36,53 @@ void Asteroid::Init()
 
     m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
 
-    m_ColliderOffset.x = 14;
-    m_ColliderOffset.y = 10;
-
-    m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x + m_ColliderOffset.x, m_Position.y + m_ColliderOffset.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
-
     Entity::Init();
 }
 
 void Asteroid::Update()
 {
-    if (m_NumberOfChunks == 0 && m_CurrentAnimation == nullptr)
+    switch (m_CurrentState)
     {
-         Move();
-    }
+        case AsteroidState::IDLE:
+        {
+            if (MathUtils::IsPointInsideCameraView(m_Position))
+            {
+                m_CurrentState = AsteroidState::ACTIVE;
+                m_ColliderOffset.x = 14;
+                m_ColliderOffset.y = 10;
 
-    if (m_CurrentAnimation != nullptr && m_CurrentAnimation->Finished())
-    {
-        ToDelete();
+                m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x + m_ColliderOffset.x, m_Position.y + m_ColliderOffset.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
+            }
+        }
+        break;
+        case AsteroidState::ACTIVE:
+        {
+            if (m_NumberOfChunks == 0)
+            {
+                Move();
+            }
+            
+            if (MathUtils::IsPointInsideCameraView(m_Position) == false)
+            {
+                ToDelete();
+            }
+        }
+        break;
+        case AsteroidState::DYING:
+        {
+            if (m_CurrentAnimation != nullptr && m_CurrentAnimation->Finished())
+            {
+                ToDelete();
+            }
+        }
+        break;
+
+        default:
+        {
+            ASSERT(false);
+            LOG("Invalid Asteroid State!");
+        }
+        break;
     }
 
     Entity::Update();
@@ -70,6 +100,7 @@ void Asteroid::Move()
 {
     int positionX = m_Position.x;
     int positionY = m_Position.y;
+
     positionX += m_Direction.x * m_Speed;
     positionY += m_Direction.y * m_Speed;
 
@@ -90,7 +121,7 @@ void Asteroid::ReceiveDamage()
             iPoint initialPosition = m_Position;
             initialPosition.x += 50;
             initialPosition.y += 50;
-            Asteroid* asteroid = m_Scene->Instantiate<Asteroid>(m_ExplosionTexturePath, 0, 4, 70, 70, 1, "Assets/Aestroids/aestroid_dark.png", fPoint(0.2f, 0.2f), initialPosition, m_Scene);
+            Asteroid* asteroid = m_Scene->Instantiate<Asteroid>(ENEMY_EXPLOSION_PATH, 0, ASTEROID_CHUNK_LIFE_POINTS, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_SPEED, ASTEROID_CHUNK_PATH, fPoint(ASTEROID_CHUNK_SCALE, ASTEROID_CHUNK_SCALE), initialPosition, m_Scene);
             
             int directionX, directionY;
             directionX = MathUtils::GetRandomInRange(-1, 1);
@@ -118,6 +149,7 @@ void Asteroid::ReceiveDamage()
             SetPosition(m_Position.x - 20, m_Position.y - 15);
             SetScale(0.5f, 0.5f);
         }
+        m_CurrentState = AsteroidState::DYING;
         SetCurrentAnimation(&m_DieAnimation);
     }
 }

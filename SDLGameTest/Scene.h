@@ -7,6 +7,8 @@
 
 #include <list>
 
+class SpawnManager;
+
 class Scene : public Module
 {
 public:
@@ -37,6 +39,8 @@ private:
 private:
     std::list<Entity*> m_Entities;
     SDL_Texture* m_Background = nullptr;
+    SpawnManager* m_SpawnManager = nullptr;
+
     const char* m_BackgroundPath;
     int m_CameraSpeed = 0;
     bool m_MoveCamera = false;

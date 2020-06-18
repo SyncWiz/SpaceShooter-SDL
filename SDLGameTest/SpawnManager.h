@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Point.h"
+
 class Scene;
 
 class SpawnManager
@@ -9,16 +11,16 @@ public:
         : m_Scene(scene)
     {}
 
-    ~SpawnManager() {} ;
+    ~SpawnManager() {};
 
     void Init();
     void Update();
     void CleanUp();
 
 private:
-    void AddEnemy();
-    void AddAsteroid();
+    void AddEnemy(const iPoint& position);
+    void AddAsteroid(const iPoint& position);
 
 private:
     Scene* m_Scene;
-}
+};

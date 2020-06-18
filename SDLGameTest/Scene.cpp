@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include <SDL_image.h>
 #include "GameConfig.h"
+#include "SpawnManager.h"
 
 Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active) 
     : m_BackgroundPath(backgroundPath)
@@ -20,10 +21,18 @@ Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active)
 Scene::~Scene()
 {}
 
-
 bool Scene::Init()
 {
     m_Background = Engine::Instance()->m_Textures->LoadOrGet(m_BackgroundPath);
+    m_SpawnManager = new SpawnManager(this);
+
+    if (m_SpawnManager == nullptr)
+    {
+        ASSERT(false);
+        return false;
+    }
+
+    m_SpawnManager->Init();
     for (Entity* entity : m_Entities)
     {
         entity->Init();
@@ -50,6 +59,7 @@ UpdateStatus Scene::PreUpdate()
 
 UpdateStatus Scene::Update()
 {
+    m_SpawnManager->Update();
     if (m_MoveCamera)
     {
         MoveCamera();
@@ -72,6 +82,9 @@ bool Scene::CleanUp()
         RELEASE(entity);
     }
     m_Entities.clear();
+
+    m_SpawnManager->CleanUp();
+    RELEASE(m_SpawnManager);
 
     return Engine::Instance()->m_Textures->CleanUp();
 }

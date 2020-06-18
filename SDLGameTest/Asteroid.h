@@ -8,7 +8,7 @@ struct Collider;
 
 class Asteroid : public Entity
 {
-    enum class EnemyState
+    enum class AsteroidState
     {
         IDLE,
         ACTIVE,
@@ -46,4 +46,5 @@ private:
     iPoint m_TargetPosition{ 0, 0 };
     const char* m_ExplosionTexturePath;
     SDL_Texture* m_ExplosionTexture;
+    AsteroidState m_CurrentState = AsteroidState::IDLE;
 };

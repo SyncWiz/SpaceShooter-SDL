@@ -100,7 +100,7 @@ void Enemy::Update()
 
         case EnemyState::DYING:
         {
-            if (m_CurrentAnimation->Finished())
+            if (m_CurrentAnimation != nullptr && m_CurrentAnimation->Finished())
             {
                 ToDelete();
             }
@@ -158,6 +158,7 @@ void Enemy::ReceiveDamage()
         SetPosition(m_Position.x - 10, m_Position.y -10);
         SetCurrentAnimation(&m_DieAnimation);
         SetScale(0.5f, 0.5f);
+
         m_EntityTexture = m_ExplosionTexture;
         m_CurrentState = EnemyState::DYING;
         m_Collider->Disable();
