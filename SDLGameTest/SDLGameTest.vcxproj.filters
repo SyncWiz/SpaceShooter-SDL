@@ -81,7 +81,7 @@
     <ClCompile Include="Asteroid.cpp">
       <Filter>Source Files\Game\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="SpawnManagercpp.cpp">
+    <ClCompile Include="SpawnManager.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>

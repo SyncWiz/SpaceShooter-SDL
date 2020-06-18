@@ -166,7 +166,7 @@ COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(Tar
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SpawnManagercpp.cpp" />
+    <ClCompile Include="SpawnManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
