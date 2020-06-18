@@ -89,8 +89,11 @@ public:
     void Normalize()
     {
         TYPE lenght = Length();
-        x =(x / lenght);
-        y =(y / lenght);
+        if (lenght != 0)
+        {
+            x = (x / lenght);
+            y = (y / lenght);
+        }
     }
 };
 

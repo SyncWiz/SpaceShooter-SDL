@@ -23,14 +23,13 @@
 #define ENEMY_BULLET false
 #define ENEMY_BULLET_COLLIDER_SIZE 20
 #define ENEMY_BULLET_SCALE 0.25f
-#define ENEMY_BULLET_SPEED 15
+#define ENEMY_BULLET_SPEED 10
 
 //Enemy
 #define ENEMY_SHIP_PATH "Assets/Enemy/Enemy_animation/enemyship_idle.png"
 #define ENEMY_EXPLOSION_PATH "Assets/Enemy/Enemy_animation/enemy_explosion.png"
-#define ENEMY_LIFE_POINTS 10
+#define ENEMY_LIFE_POINTS 4
 #define ENEMY_COLLIDER_SIZE 100
-#define ENEMY_SPEED 4
 
 //Asteroid
 #define ASTEROID_PATH "Assets/Aestroids/aestroid_brown.png"

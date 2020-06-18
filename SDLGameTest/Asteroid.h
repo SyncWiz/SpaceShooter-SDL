@@ -33,7 +33,7 @@ public:
 
 private:
     void Move();
-    void ReceiveDamage();
+    void ReceiveDamage(bool destroy);
 
 private:
     Animation m_DieAnimation;

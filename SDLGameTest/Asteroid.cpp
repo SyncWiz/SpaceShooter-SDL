@@ -35,6 +35,7 @@ void Asteroid::Init()
     m_DieAnimation.m_Speed = 0.5f;
 
     m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+    m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x + m_ColliderOffset.x, m_Position.y + m_ColliderOffset.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
 
     Entity::Init();
 }
@@ -49,9 +50,7 @@ void Asteroid::Update()
             {
                 m_CurrentState = AsteroidState::ACTIVE;
                 m_ColliderOffset.x = 14;
-                m_ColliderOffset.y = 10;
-
-                m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x + m_ColliderOffset.x, m_Position.y + m_ColliderOffset.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
+                m_ColliderOffset.y = 10; 
             }
         }
         break;
@@ -92,7 +91,12 @@ void Asteroid::OnCollision(Collider* col1, Collider* col2)
 {
     if (col2->m_Type == COLLIDER_BULLET_PLAYER)
     {
-        ReceiveDamage();
+        ReceiveDamage(false);
+    }
+
+    if (col2->m_Type == COLLIDER_PLAYER)
+    {
+        ReceiveDamage(true);
     }
 }
 
@@ -107,8 +111,13 @@ void Asteroid::Move()
     SetPosition(positionX, positionY);
 }
 
-void Asteroid::ReceiveDamage()
+void Asteroid::ReceiveDamage(bool destroy)
 {
+    if (destroy)
+    {
+        m_CurrentLifePoints = 0;
+    }
+
     m_CurrentLifePoints--;
     if (m_CurrentLifePoints <= 0)
     {
@@ -121,7 +130,7 @@ void Asteroid::ReceiveDamage()
             iPoint initialPosition = m_Position;
             initialPosition.x += 50;
             initialPosition.y += 50;
-            Asteroid* asteroid = m_Scene->Instantiate<Asteroid>(ENEMY_EXPLOSION_PATH, 0, ASTEROID_CHUNK_LIFE_POINTS, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_SPEED, ASTEROID_CHUNK_PATH, fPoint(ASTEROID_CHUNK_SCALE, ASTEROID_CHUNK_SCALE), initialPosition, m_Scene);
+            Asteroid* asteroid = m_Scene->Instantiate<Asteroid>(ENEMY_EXPLOSION_PATH, 0, ASTEROID_CHUNK_LIFE_POINTS, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_COLLIDER_SIZE, MathUtils::GetRandomInRange(1, 3), ASTEROID_CHUNK_PATH, fPoint(ASTEROID_CHUNK_SCALE, ASTEROID_CHUNK_SCALE), initialPosition, m_Scene);
             
             int directionX, directionY;
             directionX = MathUtils::GetRandomInRange(-1, 1);
@@ -132,6 +141,12 @@ void Asteroid::ReceiveDamage()
             {
                 directionX = 1;
                 directionY = -1;
+            }
+
+            //Avoiding cases where direction is the same as camera an with similar speed it feels off
+            if (directionX == 0 && directionY == -1)
+            {
+                directionX = 1;
             }
 
             asteroid->m_Direction.x = directionX;

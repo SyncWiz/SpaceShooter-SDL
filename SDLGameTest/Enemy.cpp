@@ -121,7 +121,12 @@ void Enemy::OnCollision(Collider* col1, Collider* col2)
 {
     if (col2->m_Type == COLLIDER_BULLET_PLAYER)
     {
-        ReceiveDamage();
+        ReceiveDamage(false);
+    }
+
+    if (col2->m_Type == COLLIDER_PLAYER)
+    {
+        ReceiveDamage(true);
     }
 }
 
@@ -149,8 +154,12 @@ void Enemy::Shoot()
     }
 }
 
-void Enemy::ReceiveDamage()
+void Enemy::ReceiveDamage(bool destroy)
 {
+    if (destroy)
+    {
+        m_CurrentLifePoints = 0;
+    }
     m_CurrentLifePoints--;
 
     if (m_CurrentLifePoints <= 0)

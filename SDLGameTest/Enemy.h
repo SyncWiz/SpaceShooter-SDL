@@ -31,7 +31,7 @@ public:
 private:
     void Move();
     void Shoot();
-    void ReceiveDamage();
+    void ReceiveDamage(bool destroy);
     void GenerateTargetPosition();
 
 private:
