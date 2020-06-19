@@ -23,9 +23,12 @@ Scene::~Scene()
 
 bool Scene::Start()
 {
-    m_SpawnManager = new SpawnManager(this);
-    Engine::Instance()->m_Audio->PlayMusic("Assets/Sounds/MainSound.ogg");
+    if (Engine::Instance()->m_Audio->PlayMusic("Assets/Sounds/MainSound.ogg") == false)
+    {
+        return false;
+    }
 
+    m_SpawnManager = new SpawnManager(this);
     if (m_SpawnManager == nullptr)
     {
         ASSERT(false);
@@ -84,6 +87,8 @@ UpdateStatus Scene::Update()
 
 bool Scene::CleanUp()
 {
+    Engine::Instance()->m_Audio->StopMusic();
+
     for (Entity* entity : m_Entities)
     {
         entity->CleanUp();

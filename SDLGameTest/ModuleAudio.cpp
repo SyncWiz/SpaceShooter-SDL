@@ -58,15 +58,15 @@ bool ModuleAudio::CleanUp()
     return true;
 }
 
-bool ModuleAudio::PlayMusic(const char* path, float fade_time)
+bool ModuleAudio::PlayMusic(const char* path, float fadeTime)
 {
     bool ret = true;
 
     if (m_Music != nullptr)
     {
-        if (fade_time > 0.0f)
+        if (fadeTime > 0.0f)
         {
-            Mix_FadeOutMusic((int)(fade_time * 1000.0f));
+            Mix_FadeOutMusic((int)(fadeTime * 1000.0f));
         }
         else
         {
@@ -86,9 +86,9 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
     }
     else
     {
-        if (fade_time > 0.0f)
+        if (fadeTime > 0.0f)
         {
-            if (Mix_FadeInMusic(m_Music, -1, (int)(fade_time * 1000.0f)) < 0)
+            if (Mix_FadeInMusic(m_Music, -1, (int)(fadeTime * 1000.0f)) < 0)
             {
                 LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
                 ASSERT(false);
@@ -108,6 +108,16 @@ bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 
     LOG("Successfully playing %s", path);
     return ret;
+}
+
+void ModuleAudio::StopMusic()
+{
+    if (m_Music != nullptr)
+    {
+        Mix_HaltMusic();
+        Mix_FreeMusic(m_Music);
+        m_Music = nullptr;
+    }
 }
 
 unsigned int ModuleAudio::LoadSoundEffect(const char* path)

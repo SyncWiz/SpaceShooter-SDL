@@ -24,6 +24,8 @@ public:
     bool CleanUp();
 
     bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
+    void StopMusic();
+
     unsigned int LoadSoundEffect(const char* path);
     bool PlaySoundEffect(unsigned int soundEffectID, int repeat = 0);
 
