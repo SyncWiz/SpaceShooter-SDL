@@ -1,10 +1,9 @@
 #pragma once
 
 #include "Module.h"
+#include "Config.h"
 
-#include <vector>
-
-#define DEFAULT_MUSIC_FADE_TIME 2.0f
+#include <unordered_map>
 
 struct _Mix_Music;
 struct Mix_Chunk;
@@ -25,12 +24,13 @@ public:
 
     bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
     void StopMusic();
+    void CleanUpSoundEffects();
 
-    unsigned int LoadSoundEffect(const char* path);
-    bool PlaySoundEffect(unsigned int soundEffectID, int repeat = 0);
+    size_t LoadOrGetSoundEffect(const char* path);
+    bool PlaySoundEffect(size_t soundEffectID, int repeat = 0);
 
 private:
 
     Mix_Music* m_Music = nullptr;
-    std::vector<Mix_Chunk*>	m_SoundEffects;
+    std::unordered_map<size_t, Mix_Chunk*> m_SoundEffects;
 };

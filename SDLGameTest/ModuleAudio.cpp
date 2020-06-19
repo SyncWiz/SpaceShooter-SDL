@@ -25,12 +25,21 @@ bool ModuleAudio::Init()
     if ((init & flags) != flags)
     {
         LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
+        ASSERT(false);
         ret = false;
     }
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
         LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        ASSERT(false);
+        ret = false;
+    }
+
+    if(Mix_VolumeMusic(DEFAULT_MUSIC_VOLUME) < 0)
+    {
+        LOG("SDL_mixer could not set volume music! SDL_mixer Error: %s\n", Mix_GetError());
+        ASSERT(false);
         ret = false;
     }
 
@@ -46,9 +55,12 @@ bool ModuleAudio::CleanUp()
         Mix_FreeMusic(m_Music);
     }
 
-    for (vector<Mix_Chunk*>::iterator it = m_SoundEffects.begin(); it != m_SoundEffects.end(); ++it)
+    for (unordered_map<size_t, Mix_Chunk*>::iterator it = m_SoundEffects.begin(); it != m_SoundEffects.end(); ++it)
     {
-        Mix_FreeChunk(*it);
+        if (it->second != nullptr)
+        {
+            Mix_FreeChunk(it->second);
+        }
     }
 
     m_SoundEffects.clear();
@@ -114,38 +126,62 @@ void ModuleAudio::StopMusic()
 {
     if (m_Music != nullptr)
     {
-        Mix_HaltMusic();
         Mix_FreeMusic(m_Music);
         m_Music = nullptr;
     }
 }
 
-unsigned int ModuleAudio::LoadSoundEffect(const char* path)
+void ModuleAudio::CleanUpSoundEffects()
 {
-    unsigned int ret = 0;
-    Mix_Chunk* chunk = Mix_LoadWAV(path);
+    for (unordered_map<size_t, Mix_Chunk*>::iterator it = m_SoundEffects.begin(); it != m_SoundEffects.end(); ++it)
+    {
+        if (it->second != nullptr)
+        {
+            Mix_FreeChunk(it->second);
+        }
+    }
+}
 
+size_t ModuleAudio::LoadOrGetSoundEffect(const char* path)
+{
+    hash<const char*> hasher;
+    size_t hash = hasher(path);
+
+    unordered_map<size_t, Mix_Chunk*>::iterator it = m_SoundEffects.find(hash);
+    if (it != m_SoundEffects.end())
+    {
+        return it->first;
+    }
+
+    Mix_Chunk* chunk = Mix_LoadWAV(path);
     if (chunk == nullptr)
     {
         LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+        ASSERT(false);
     }
     else
     {
-        m_SoundEffects.push_back(chunk);
-        ret = (unsigned int) m_SoundEffects.size() - 1;
+        m_SoundEffects[hash] = chunk;
     }
 
-    return ret;
+    return hash;
 }
 
-bool ModuleAudio::PlaySoundEffect(unsigned int id, int repeat)
+bool ModuleAudio::PlaySoundEffect(size_t id, int repeat)
 {
     bool ret = false;
 
     if (id < m_SoundEffects.size())
     {
+        ASSERT(m_SoundEffects[id]);
         Mix_PlayChannel(-1, m_SoundEffects[id], repeat);
         ret = true;
+    }
+
+    if (ret == false)
+    {
+        LOG("Cannot Play Sound Effect %i. Mix_GetError(): %s", id, Mix_GetError());
+        ASSERT(false);
     }
 
     return ret;

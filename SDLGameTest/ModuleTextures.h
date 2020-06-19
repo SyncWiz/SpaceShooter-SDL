@@ -2,7 +2,6 @@
 
 #include "Module.h"
 
-#include<list>
 #include <unordered_map>
 
 struct SDL_Texture;
