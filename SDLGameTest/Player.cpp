@@ -10,6 +10,9 @@
 
 void Player::Init()
 {
+    m_TimeBetweenShoots = PLAYER_TIME_BETWEEN_SHOOTS;
+    m_InvulnerabilityTime = PLAYER_INVULNERABILITY_TIME;
+
     int lenght = 512;
     m_IdleAnimation.m_Frames.push_back({ 0, 0, lenght, lenght });
     m_IdleAnimation.m_Frames.push_back({ lenght, 0, lenght, lenght });
@@ -54,6 +57,7 @@ void Player::Init()
 
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
     m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+    m_PlayerInvulnerabilityTexture = Engine::Instance()->m_Textures->LoadOrGet(PLAYER_INVULNERABILITY_PATH);
 
     Entity::Init();
 }
@@ -72,6 +76,24 @@ void Player::Update()
                 m_CurrentTimeToShoot = 0;
             }
 
+            
+            Entity::Update();
+
+            if (m_CanReceiveDamage == false)
+            {
+                DrawInvulnerabilityEffect();
+                if (m_CurrentInvulnerabilityTime >= m_InvulnerabilityTime)
+                {
+                    m_CanReceiveDamage = true;
+                    m_CurrentInvulnerabilityTime = 0;
+                    m_Collider->Enable();
+                }
+                else
+                {
+                    m_CurrentInvulnerabilityTime += Engine::Instance()->GetDT();
+                }
+            }
+
             m_CurrentTimeToShoot += Engine::Instance()->GetDT();
         }
         break;
@@ -82,18 +104,21 @@ void Player::Update()
             {
                 ToDelete();
             }
+            Entity::Update();
         }
         break;
     }
-
-    Entity::Update();
 }
 
 void Player::OnCollision(Collider* col1, Collider* col2)
 {
-    if (col2->m_Type == COLLIDER_BULLET_ENEMY)
+    if (m_CanReceiveDamage == true)
     {
-        ReceiveDamage();
+        const ColliderType& type = col2->m_Type;
+        if (type == COLLIDER_BULLET_ENEMY || type == COLLIDER_ENEMY)
+        {
+            ReceiveDamage();
+        }
     }
 }
 
@@ -206,6 +231,7 @@ void Player::Shoot()
 void Player::ReceiveDamage()
 {
     m_CurrentLifePoints--;
+    m_CanReceiveDamage = false;
     if (m_CurrentLifePoints <= 0)
     {
         SetPosition(m_Position.x - 10, m_Position.y - 10);
@@ -214,6 +240,11 @@ void Player::ReceiveDamage()
         m_EntityTexture = m_ExplosionTexture;
         m_Scene->StopCamera();
         m_CurrentState = PlayerState::DYING;
-        m_Collider->Disable();
     }
+    m_Collider->Disable();
+}
+
+void Player::DrawInvulnerabilityEffect()
+{
+    Engine::Instance()->m_Renderer->Blit(m_PlayerInvulnerabilityTexture, m_Position.x - 53, m_Position.y - 35, nullptr, 0.5f, 0.5f);
 }

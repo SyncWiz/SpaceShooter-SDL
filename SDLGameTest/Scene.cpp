@@ -68,13 +68,12 @@ UpdateStatus Scene::Update()
             MoveCamera();
         }
 
-        for (Entity* entity : m_Entities)
+        for (list<Entity*>::reverse_iterator it = m_Entities.rbegin(); it != m_Entities.rend(); ++it)
         {
-            if (entity != nullptr && entity->IsActive())
+            if ((*it) != nullptr && (*it)->IsActive())
             {
-                entity->Update();
+                (*it)->Update();
             }
-
         }
     }
 

@@ -17,16 +17,20 @@ void SpawnManager::Init()
 
 void SpawnManager::Update()
 {
-    if (m_CurrentTimeToSpawn >= m_TimeBetweenSpawns)
+#ifdef _DEBUG
+    if (MOVE_MAIN_CAMERA)
+#endif
     {
-        iPoint spawnPosition;
-        spawnPosition.x = MathUtils::GetRandomPositionInCameraRangeX();
-        spawnPosition.y = -(Engine::Instance()->m_Renderer->m_Camera.y + m_CameraYOffsetToSpawn);
-
-        SpawnType entityToSpawn = (SpawnType) MathUtils::GetRandomInRange((int)SpawnType::ENEMY, (int)SpawnType::ASTEROID);
-
-        switch (entityToSpawn)
+        if (m_CurrentTimeToSpawn >= m_TimeBetweenSpawns)
         {
+            iPoint spawnPosition;
+            spawnPosition.x = MathUtils::GetRandomPositionInCameraRangeX();
+            spawnPosition.y = -(Engine::Instance()->m_Renderer->m_Camera.y + m_CameraYOffsetToSpawn);
+
+            SpawnType entityToSpawn = (SpawnType)MathUtils::GetRandomInRange((int)SpawnType::ENEMY, (int)SpawnType::ASTEROID);
+
+            switch (entityToSpawn)
+            {
             case SpawnType::ENEMY:
             {
                 AddEnemy(spawnPosition);
@@ -47,11 +51,13 @@ void SpawnManager::Update()
                 LOG("Invalid Spawn Type!");
             }
             break;
+            }
+            m_CurrentTimeToSpawn = 0;
         }
-        m_CurrentTimeToSpawn = 0;
-    }
 
-    m_CurrentTimeToSpawn += Engine::Instance()->GetDT();
+        m_CurrentTimeToSpawn += Engine::Instance()->GetDT();
+    }
+    
 }
 
 void SpawnManager::CleanUp()

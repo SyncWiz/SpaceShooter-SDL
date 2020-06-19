@@ -3,6 +3,7 @@
 //Player
 #define PLAYER_SHIP_PATH "Assets/Player/Animation/spaceship_idle.png"
 #define PLAYER_EXPLOSION_PATH "Assets/Player/Animation/player_explosion.png"
+#define PLAYER_INVULNERABILITY_PATH "Assets/Player/InvulnerabilityCircle.png"
 #define PLAYER_HORIZONTAL_SPEED 5
 #define PLAYER_VERTICAL_SPEED 2
 #define PLAYER_COLLIDER_SIZE 100
@@ -17,6 +18,8 @@
 #define PLAYER_BULLET_SCALE 0.25f
 #define PLAYER_BULLET_SPEED 15
 #define PLAYER_LIFE_POINTS 4
+#define PLAYER_TIME_BETWEEN_SHOOTS 200 // ms
+#define PLAYER_INVULNERABILITY_TIME 2000 // ms
 
 //Enemy Bullet
 #define ENEMY_BULLET_PATH "Assets/Enemy/bullet_enemy.png"

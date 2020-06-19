@@ -33,6 +33,7 @@ private:
     void Move();
     void Shoot();
     void ReceiveDamage();
+    void DrawInvulnerabilityEffect();
 
 private:
     Animation m_IdleAnimation, m_DieAnimation;
@@ -42,10 +43,17 @@ private:
     int m_Width = 0;
     int m_Height = 0;
     iPoint m_Direction{ 0 , 0 };
-    double m_CurrentTimeToShoot = 0;
-    double m_TimeBetweenShoots = 200;
     bool m_CanShoot = true;
+    bool m_CanReceiveDamage = true;
     const char* m_ExplosionTexturePath;
     SDL_Texture* m_ExplosionTexture;
+    SDL_Texture* m_PlayerInvulnerabilityTexture;
     PlayerState m_CurrentState = PlayerState::ACTIVE;
+
+    //Timers
+    double m_CurrentTimeToShoot = 0;
+    double m_TimeBetweenShoots = 0;
+
+    double m_InvulnerabilityTime = 0;
+    double m_CurrentInvulnerabilityTime = 0;
 };

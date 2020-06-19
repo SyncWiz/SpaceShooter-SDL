@@ -52,6 +52,11 @@ struct Collider
         m_Delete = true;
     }
 
+    void Enable()
+    {
+        m_Active = true;
+    }
+
     void Disable()
     {
         m_Active = false;
