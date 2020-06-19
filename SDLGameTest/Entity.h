@@ -48,9 +48,9 @@ public:
         m_ColliderOffset = offset;
     }
 
-    void SetCurrentTexture(SDL_Texture* texture)
+    void SetCurrentTextureID(size_t textureID)
     {
-        m_EntityTexture = texture;
+        m_EntityTextureID = textureID;
     }
 
     void ToDelete()
@@ -75,7 +75,7 @@ protected:
     iPoint m_ColliderOffset;
     fPoint m_TextureScale;
     const char* m_TexturePath;
-    SDL_Texture* m_EntityTexture;
+    size_t m_EntityTextureID;
     Scene* m_Scene;
     bool m_Active = true;
     Collider* m_Collider;

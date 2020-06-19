@@ -9,7 +9,7 @@
 
 void Entity::Init()
 {
-    m_EntityTexture = Engine::Instance()->m_Textures->LoadOrGet(m_TexturePath);
+    m_EntityTextureID = Engine::Instance()->m_Textures->LoadOrGet(m_TexturePath);
 }
 
 void Entity::Update()
@@ -18,11 +18,11 @@ void Entity::Update()
     {
         if (m_CurrentAnimation != nullptr)
         {
-            Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, &(m_CurrentAnimation->GetCurrentFrame()), m_TextureScale.x, m_TextureScale.y);
+            Engine::Instance()->m_Renderer->Blit(m_EntityTextureID, m_Position.x, m_Position.y, &(m_CurrentAnimation->GetCurrentFrame()), m_TextureScale.x, m_TextureScale.y);
         }
         else
         {
-            Engine::Instance()->m_Renderer->Blit(m_EntityTexture, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
+            Engine::Instance()->m_Renderer->Blit(m_EntityTextureID, m_Position.x, m_Position.y, nullptr, m_TextureScale.x, m_TextureScale.y);
         }
     }
 }

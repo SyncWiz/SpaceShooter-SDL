@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "ModuleTextures.h"
 #include "ModuleCollision.h"
+#include "ModuleAudio.h"
 #include "Scene.h"
 #include "GameConfig.h"
 
@@ -34,8 +35,13 @@ void Asteroid::Init()
     m_DieAnimation.m_Loop = false;
     m_DieAnimation.m_Speed = 0.5f;
 
-    m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+    m_ExplosionTextureID = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+
+    //Textures
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x + m_ColliderOffset.x, m_Position.y + m_ColliderOffset.y, m_Width, m_Height }, COLLIDER_ENEMY, this);
+
+    //Sounds
+    m_ExplosionSoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Enemy/AsteroidExplosion.ogg");
 
     Entity::Init();
 }
@@ -63,7 +69,21 @@ void Asteroid::Update()
             
             if (MathUtils::IsPointInsideCameraView(m_Position) == false)
             {
-                ToDelete();
+                bool canDelete = true;
+                //Avoiding delete Asteroids when they can be visible on screen
+                if (m_Position.x <= 0) 
+                {
+                    canDelete = false;
+                    if (m_Position.x + 200 <= 0)
+                    {
+                        canDelete = true;
+                    }
+                }
+
+                if (canDelete)
+                {
+                    ToDelete();
+                }
             }
         }
         break;
@@ -122,7 +142,9 @@ void Asteroid::ReceiveDamage(bool destroy)
     if (m_CurrentLifePoints <= 0)
     {
        
-        m_EntityTexture = m_ExplosionTexture;
+        SetCurrentTextureID(m_ExplosionTextureID);
+        Engine::Instance()->m_Audio->PlaySoundEffect(m_ExplosionSoundID);
+
         m_Collider->Disable();
 
         for (int i = 0; i < m_NumberOfChunks; ++i)

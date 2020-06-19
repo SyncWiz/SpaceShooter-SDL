@@ -46,8 +46,7 @@ private:
     bool m_CanShoot = true;
     bool m_CanReceiveDamage = true;
     const char* m_ExplosionTexturePath;
-    SDL_Texture* m_ExplosionTexture;
-    SDL_Texture* m_PlayerInvulnerabilityTexture;
+    
     PlayerState m_CurrentState = PlayerState::ACTIVE;
 
     //Timers
@@ -56,4 +55,13 @@ private:
 
     double m_InvulnerabilityTime = 0;
     double m_CurrentInvulnerabilityTime = 0;
+
+
+    // Assets IDs
+    size_t m_ExplosionTextureID;
+    size_t m_PlayerInvulnerabilityTextureID;
+    size_t m_ExplosionSoundID;
+    size_t m_ShootSoundID;
+    size_t m_PlayerInvulnerabilitySoundID;
+    size_t m_ReturnToNormalSoundID;
 };

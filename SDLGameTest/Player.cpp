@@ -7,6 +7,7 @@
 #include "Bullet.h"
 #include "GameConfig.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 
 void Player::Init()
 {
@@ -56,8 +57,16 @@ void Player::Init()
     m_CurrentLifePoints = PLAYER_LIFE_POINTS;
 
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
-    m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
-    m_PlayerInvulnerabilityTexture = Engine::Instance()->m_Textures->LoadOrGet(PLAYER_INVULNERABILITY_PATH);
+   
+    //Textures
+    m_ExplosionTextureID = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+    m_PlayerInvulnerabilityTextureID = Engine::Instance()->m_Textures->LoadOrGet(PLAYER_INVULNERABILITY_PATH);
+
+    //Sounds
+    m_ExplosionSoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Player/DieSound.ogg");
+    m_ShootSoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Player/BasicShoot.ogg");
+    m_PlayerInvulnerabilitySoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Player/InvulnerabilitySound.ogg");
+    m_ReturnToNormalSoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Player/ReturnNormalSound.ogg");
 
     Entity::Init();
 }
@@ -76,7 +85,6 @@ void Player::Update()
                 m_CurrentTimeToShoot = 0;
             }
 
-            
             Entity::Update();
 
             if (m_CanReceiveDamage == false)
@@ -87,6 +95,7 @@ void Player::Update()
                     m_CanReceiveDamage = true;
                     m_CurrentInvulnerabilityTime = 0;
                     m_Collider->Enable();
+                    Engine::Instance()->m_Audio->PlaySoundEffect(m_ReturnToNormalSoundID);
                 }
                 else
                 {
@@ -223,6 +232,8 @@ void Player::Shoot()
         bullet->SetColliderOffset(iPoint{ 5, -8 });
         bullet2->SetColliderOffset(iPoint{ 5, -8 });
 
+        Engine::Instance()->m_Audio->PlaySoundEffect(m_ShootSoundID);
+
         m_CanShoot = false;
         m_CurrentTimeToShoot = 0;
     }
@@ -232,19 +243,26 @@ void Player::ReceiveDamage()
 {
     m_CurrentLifePoints--;
     m_CanReceiveDamage = false;
+
     if (m_CurrentLifePoints <= 0)
     {
         SetPosition(m_Position.x - 10, m_Position.y - 10);
         SetCurrentAnimation(&m_DieAnimation);
         SetScale(0.5f, 0.5f);
-        m_EntityTexture = m_ExplosionTexture;
+        SetCurrentTextureID(m_ExplosionTextureID);
         m_Scene->StopCamera();
         m_CurrentState = PlayerState::DYING;
+        Engine::Instance()->m_Audio->PlaySoundEffect(m_ExplosionSoundID);
     }
+    else
+    {
+        Engine::Instance()->m_Audio->PlaySoundEffect(m_PlayerInvulnerabilitySoundID);
+    }
+
     m_Collider->Disable();
 }
 
 void Player::DrawInvulnerabilityEffect()
 {
-    Engine::Instance()->m_Renderer->Blit(m_PlayerInvulnerabilityTexture, m_Position.x - 53, m_Position.y - 35, nullptr, 0.5f, 0.5f);
+    Engine::Instance()->m_Renderer->Blit(m_PlayerInvulnerabilityTextureID, m_Position.x - 53, m_Position.y - 35, nullptr, 0.5f, 0.5f);
 }

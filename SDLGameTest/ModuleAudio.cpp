@@ -170,10 +170,11 @@ size_t ModuleAudio::LoadOrGetSoundEffect(const char* path)
 bool ModuleAudio::PlaySoundEffect(size_t id, int repeat)
 {
     bool ret = false;
+    Mix_Chunk* soundEffect = m_SoundEffects[id];
+    ASSERT(soundEffect);
 
-    if (id < m_SoundEffects.size())
+    if (soundEffect)
     {
-        ASSERT(m_SoundEffects[id]);
         Mix_PlayChannel(-1, m_SoundEffects[id], repeat);
         ret = true;
     }
@@ -181,7 +182,6 @@ bool ModuleAudio::PlaySoundEffect(size_t id, int repeat)
     if (ret == false)
     {
         LOG("Cannot Play Sound Effect %i. Mix_GetError(): %s", id, Mix_GetError());
-        ASSERT(false);
     }
 
     return ret;

@@ -15,7 +15,8 @@ public:
     bool Init() override;
     bool CleanUp() override;
 
-    SDL_Texture* const LoadOrGet(const char* path);
+    size_t const LoadOrGet(const char* path);
+    SDL_Texture* GetTexture(size_t textureID);
     void Unload(SDL_Texture* texture);
 
 private:

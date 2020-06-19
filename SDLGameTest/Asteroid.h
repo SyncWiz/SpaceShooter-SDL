@@ -45,6 +45,9 @@ private:
     iPoint m_Direction{ 0 , 0 };
     iPoint m_TargetPosition{ 0, 0 };
     const char* m_ExplosionTexturePath;
-    SDL_Texture* m_ExplosionTexture;
     AsteroidState m_CurrentState = AsteroidState::IDLE;
+
+    // Assets IDs
+    size_t m_ExplosionTextureID;
+    size_t m_ExplosionSoundID;
 };

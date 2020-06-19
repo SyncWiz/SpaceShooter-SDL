@@ -2,6 +2,7 @@
 
 #include "Engine.h"
 #include "ModuleWindow.h"
+#include "ModuleTextures.h"
 #include "Utils.h"
 #include <SDL_render.h>
 #include "Config.h"
@@ -69,8 +70,11 @@ bool ModuleRender::CleanUp()
     return true;
 }
 
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float scaleX, float scaleY, float speed)
+bool ModuleRender::Blit(size_t textureID, int x, int y, SDL_Rect* section, float scaleX, float scaleY, float speed)
 {
+    ASSERT(Engine::Instance()->m_Textures->GetTexture(textureID));
+    SDL_Texture* texture = Engine::Instance()->m_Textures->GetTexture(textureID);
+
     bool ret = true;
     SDL_Rect rect;
     rect.x = (int)(m_Camera.x * speed) + x * SCREEN_SIZE;

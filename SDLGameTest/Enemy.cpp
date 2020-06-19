@@ -1,8 +1,10 @@
 #include "Enemy.h"
+
 #include "MathUtils.h"
 #include "Engine.h"
 #include "ModuleCollision.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 #include "Scene.h"
 
 #include "Bullet.h"
@@ -49,7 +51,12 @@ void Enemy::Init()
 
     SetCurrentAnimation(&m_IdleAnimation);
 
-    m_ExplosionTexture = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+    //Textures
+    m_ExplosionTextureID = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
+
+    //Sounds
+    m_ExplosionSoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Enemy/EnemyDie.ogg");
+    m_ShootSoundID = Engine::Instance()->m_Audio->LoadOrGetSoundEffect("Assets/Sounds/Enemy/EnemyShoot.ogg");
 
     Entity::Init();
 }
@@ -151,6 +158,7 @@ void Enemy::Shoot()
         bullet->SetColliderOffset(iPoint{ 7, 24 });
         m_CanShoot = false;
         m_CurrentTimeToShoot = 0;
+        Engine::Instance()->m_Audio->PlaySoundEffect(m_ShootSoundID);
     }
 }
 
@@ -164,11 +172,12 @@ void Enemy::ReceiveDamage(bool destroy)
 
     if (m_CurrentLifePoints <= 0)
     {
+        Engine::Instance()->m_Audio->PlaySoundEffect(m_ExplosionSoundID);
         SetPosition(m_Position.x - 10, m_Position.y -10);
         SetCurrentAnimation(&m_DieAnimation);
         SetScale(0.5f, 0.5f);
 
-        m_EntityTexture = m_ExplosionTexture;
+        SetCurrentTextureID(m_ExplosionTextureID);
         m_CurrentState = EnemyState::DYING;
         m_Collider->Disable();
     }

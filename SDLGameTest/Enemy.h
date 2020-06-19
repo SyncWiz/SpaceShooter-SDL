@@ -48,5 +48,9 @@ private:
     double m_TimeBetweenShoots = 1000;
     bool m_CanShoot = true;
     const char* m_ExplosionTexturePath;
-    SDL_Texture* m_ExplosionTexture;
+    
+    //Assets IDs
+    size_t m_ExplosionTextureID;
+    size_t m_ExplosionSoundID;
+    size_t m_ShootSoundID;
 };

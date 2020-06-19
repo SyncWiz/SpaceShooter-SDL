@@ -48,7 +48,7 @@ bool ModuleTextures::CleanUp()
     return true;
 }
 
-SDL_Texture* const ModuleTextures::LoadOrGet(const char* path)
+size_t const ModuleTextures::LoadOrGet(const char* path)
 {
     hash<const char*> hasher;
     size_t hash = hasher(path);
@@ -56,7 +56,7 @@ SDL_Texture* const ModuleTextures::LoadOrGet(const char* path)
     unordered_map<size_t, SDL_Texture*>::iterator it = m_Textures.find(hash);
     if (it != m_Textures.end())
     {
-        return it->second;
+        return it->first;
     }
 
     SDL_Texture* texture = nullptr;
@@ -83,7 +83,12 @@ SDL_Texture* const ModuleTextures::LoadOrGet(const char* path)
         SDL_FreeSurface(surface);
     }
 
-    return texture;
+    return hash;
+}
+
+SDL_Texture* ModuleTextures::GetTexture(size_t textureID)
+{
+    return m_Textures[textureID];
 }
 
 void ModuleTextures::Unload(SDL_Texture* texture)
