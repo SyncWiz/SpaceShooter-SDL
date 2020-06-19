@@ -33,6 +33,10 @@ void SpawnManager::Update()
             {
             case SpawnType::ENEMY:
             {
+                if (spawnPosition.x + 50 > SCREEN_WIDTH * SCREEN_SIZE)
+                {
+                    spawnPosition.x = (SCREEN_WIDTH * SCREEN_SIZE) - 50;
+                }
                 AddEnemy(spawnPosition);
             }
             break;
@@ -57,7 +61,6 @@ void SpawnManager::Update()
 
         m_CurrentTimeToSpawn += Engine::Instance()->GetDT();
     }
-    
 }
 
 void SpawnManager::CleanUp()
