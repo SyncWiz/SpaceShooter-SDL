@@ -9,6 +9,7 @@ class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
+class ModuleAudio;
 class ModuleFadeToBlack;
 class ModuleCollision;
 class Scene;
@@ -35,6 +36,7 @@ public:
     ModuleWindow* m_Window;
     ModuleTextures* m_Textures;
     ModuleInput* m_Input;
+    ModuleAudio* m_Audio;
     ModuleFadeToBlack* m_FadeToBlack;
     ModuleCollision* m_Collisions;
 

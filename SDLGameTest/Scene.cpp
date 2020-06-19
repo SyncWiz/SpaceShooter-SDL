@@ -3,6 +3,7 @@
 #include "Engine.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
+#include "ModuleAudio.h"
 #include <SDL_image.h>
 #include "GameConfig.h"
 #include "SpawnManager.h"
@@ -23,6 +24,7 @@ Scene::~Scene()
 bool Scene::Start()
 {
     m_SpawnManager = new SpawnManager(this);
+    Engine::Instance()->m_Audio->PlayMusic("Assets/Sounds/MainSound.ogg");
 
     if (m_SpawnManager == nullptr)
     {

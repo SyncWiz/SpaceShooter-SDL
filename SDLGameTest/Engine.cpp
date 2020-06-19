@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
+#include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollision.h"
 #include "Scene.h"
@@ -26,6 +27,7 @@ Engine::Engine()
     m_Modules.push_back(m_Window = new ModuleWindow());
     m_Modules.push_back(m_Renderer = new ModuleRender());
     m_Modules.push_back(m_Textures = new ModuleTextures());
+    m_Modules.push_back(m_Audio = new ModuleAudio());
     /////
 
     //Game Modules
