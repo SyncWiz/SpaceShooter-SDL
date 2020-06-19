@@ -8,6 +8,9 @@
 #include "GameConfig.h"
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
+#include "ModuleText.h"
+#include "ModuleFadeToBlack.h"
+#include <string>
 
 void Player::Init()
 {
@@ -77,6 +80,7 @@ void Player::Update()
     {
         case PlayerState::ACTIVE:
         {
+            DrawScore();
             HandleInput();
             Move();
             if (m_CurrentTimeToShoot >= m_TimeBetweenShoots)
@@ -112,6 +116,7 @@ void Player::Update()
             if (m_CurrentAnimation->Finished())
             {
                 ToDelete();
+                Engine::Instance()->m_FadeToBlack->FadeToBlack(m_Scene, m_Scene);
             }
             Entity::Update();
         }
@@ -265,4 +270,12 @@ void Player::ReceiveDamage()
 void Player::DrawInvulnerabilityEffect()
 {
     Engine::Instance()->m_Renderer->Blit(m_PlayerInvulnerabilityTextureID, m_Position.x - 53, m_Position.y - 35, nullptr, 0.5f, 0.5f);
+}
+
+void Player::DrawScore()
+{
+    std::string scoreString = std::to_string(m_Score);
+    scoreString = "Score: " + scoreString;
+    char const* scoreChar = scoreString.c_str();
+    Engine::Instance()->m_Text->DrawText(scoreChar, 50, SCREEN_WIDTH - 200, 0);
 }

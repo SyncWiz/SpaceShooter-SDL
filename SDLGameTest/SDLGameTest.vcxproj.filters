@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Game\Enemy">
       <UniqueIdentifier>{92f92acc-666c-4485-a067-6c6d0b5b4403}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Player\HUD">
+      <UniqueIdentifier>{a1998bc1-657a-45cc-bc5e-064024ea10e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -85,6 +88,12 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="ModuleAudio.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Source Files\Game\Player\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleText.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,6 +165,12 @@
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="ModuleAudio.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>Source Files\Game\Player\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleText.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>

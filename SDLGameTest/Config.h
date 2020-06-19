@@ -1,7 +1,7 @@
 #pragma once
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
-#define DEFAULT_MUSIC_VOLUME 15
+#define DEFAULT_MUSIC_VOLUME 17
 
 #define SCREEN_SIZE 1
 #define SCREEN_WIDTH 800

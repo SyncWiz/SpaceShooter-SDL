@@ -17,7 +17,7 @@
 #define PLAYER_BULLET_COLLIDER_SIZE 20
 #define PLAYER_BULLET_SCALE 0.25f
 #define PLAYER_BULLET_SPEED 15
-#define PLAYER_LIFE_POINTS 4
+#define PLAYER_LIFE_POINTS 5
 #define PLAYER_TIME_BETWEEN_SHOOTS 200 // ms
 #define PLAYER_INVULNERABILITY_TIME 2000 // ms
 
@@ -33,6 +33,7 @@
 #define ENEMY_EXPLOSION_PATH "Assets/Enemy/Enemy_animation/enemy_explosion.png"
 #define ENEMY_LIFE_POINTS 4
 #define ENEMY_COLLIDER_SIZE 100
+#define ENEMY_POINTS 150
 
 //Asteroid
 #define ASTEROID_PATH "Assets/Aestroids/aestroid_brown.png"
@@ -44,6 +45,8 @@
 #define ASTEROID_CHUNK_SPEED 1
 #define ASTEROID_SCALE 0.4f
 #define ASTEROID_CHUNK_SCALE 0.2f
+#define BIG_ASTEROID_POINTS 200
+#define CHUNK_ASTEROID_POINTS 100
 
 //Main Scene
 #define MAIN_GAME_CAMERA_SPEED 2

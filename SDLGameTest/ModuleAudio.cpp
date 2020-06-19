@@ -175,6 +175,7 @@ bool ModuleAudio::PlaySoundEffect(size_t id, int repeat)
 
     if (soundEffect)
     {
+        Mix_Volume(-1, MIX_MAX_VOLUME / 4);
         Mix_PlayChannel(-1, m_SoundEffects[id], repeat);
         ret = true;
     }

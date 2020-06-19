@@ -8,6 +8,7 @@
 #include <list>
 
 class SpawnManager;
+class Player;
 
 class Scene : public Module
 {
@@ -21,35 +22,42 @@ public:
     UpdateStatus Update() override;
     bool CleanUp() override;
 
+    Player* GetPlayer() const
+    {
+        return m_Player;
+    }
+
     void StopCamera()
     {
         m_MoveCamera = false;
     }
 
     template<typename EntityToAdd, class... Arguments, ENABLE_IF(IS_BASE_OF(Entity, EntityToAdd))>
-    void AddEntity(Arguments&&... args);
+    EntityToAdd* AddEntity(Arguments&&... args);
 
     template<typename EntityToInstantiate, class... Arguments, ENABLE_IF(IS_BASE_OF(Entity, EntityToInstantiate))>
     EntityToInstantiate* Instantiate(Arguments&&... args);
 
 private:
-    void DrawBackground();
     void MoveCamera();
 
 private:
     std::list<Entity*> m_Entities;
     SDL_Texture* m_Background = nullptr;
     SpawnManager* m_SpawnManager = nullptr;
+    Player* m_Player = nullptr;
 
     int m_CameraSpeed = 0;
     bool m_MoveCamera = false;
 };
 
 template <typename EntityToAdd, class... Arguments, typename Enable>
-void Scene::AddEntity(Arguments&&... args)
+EntityToAdd* Scene::AddEntity(Arguments&&... args)
 {
     EntityToAdd* entityToAdd = new EntityToAdd(std::forward<Arguments>(args)...);
     m_Entities.push_back(entityToAdd);
+
+    return entityToAdd;
 }
 
 template <typename EntityToInstantiate, class... Arguments, typename Enable>

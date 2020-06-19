@@ -71,12 +71,12 @@ public:
 
 protected:
     Animation* m_CurrentAnimation = nullptr;
-    iPoint m_Position;
-    iPoint m_ColliderOffset;
-    fPoint m_TextureScale;
+    iPoint m_Position{ 0, 0 };
+    iPoint m_ColliderOffset{ 0 , 0 };
+    fPoint m_TextureScale{ 0.0f, 0.0f };
     const char* m_TexturePath;
-    size_t m_EntityTextureID;
-    Scene* m_Scene;
+    size_t m_EntityTextureID = 0;
+    Scene* m_Scene = nullptr;
     bool m_Active = true;
-    Collider* m_Collider;
+    Collider* m_Collider = nullptr;
 };

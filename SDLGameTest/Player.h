@@ -26,6 +26,15 @@ public:
     void Init() override;
     void Update() override;
     void OnCollision(Collider* col1, Collider* col2) override;
+    void AddScore(int scoreToAdd)
+    {
+        m_Score += scoreToAdd;
+    }
+
+    int GetLifePoints() const
+    {
+        return m_CurrentLifePoints;
+    }
 
 private:
 
@@ -34,6 +43,7 @@ private:
     void Shoot();
     void ReceiveDamage();
     void DrawInvulnerabilityEffect();
+    void DrawScore();
 
 private:
     Animation m_IdleAnimation, m_DieAnimation;
@@ -42,6 +52,7 @@ private:
     int m_HorizontalSpeed = 0;
     int m_Width = 0;
     int m_Height = 0;
+    int m_Score = 0;
     iPoint m_Direction{ 0 , 0 };
     bool m_CanShoot = true;
     bool m_CanReceiveDamage = true;
@@ -58,10 +69,10 @@ private:
 
 
     // Assets IDs
-    size_t m_ExplosionTextureID;
-    size_t m_PlayerInvulnerabilityTextureID;
-    size_t m_ExplosionSoundID;
-    size_t m_ShootSoundID;
-    size_t m_PlayerInvulnerabilitySoundID;
-    size_t m_ReturnToNormalSoundID;
+    size_t m_ExplosionTextureID = 0;
+    size_t m_PlayerInvulnerabilityTextureID = 0;
+    size_t m_ExplosionSoundID = 0;
+    size_t m_ShootSoundID = 0;
+    size_t m_PlayerInvulnerabilitySoundID = 0;
+    size_t m_ReturnToNormalSoundID = 0;
 };

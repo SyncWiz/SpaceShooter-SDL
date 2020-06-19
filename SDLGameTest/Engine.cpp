@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleCollision.h"
+#include "ModuleText.h"
 #include "Scene.h"
 #include <SDL_image.h>
 
@@ -27,6 +28,7 @@ Engine::Engine()
     m_Modules.push_back(m_Window = new ModuleWindow());
     m_Modules.push_back(m_Renderer = new ModuleRender());
     m_Modules.push_back(m_Textures = new ModuleTextures());
+    m_Modules.push_back(m_Text = new ModuleText());
     m_Modules.push_back(m_Audio = new ModuleAudio());
     /////
 

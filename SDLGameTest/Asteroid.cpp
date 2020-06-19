@@ -6,6 +6,7 @@
 #include "ModuleAudio.h"
 #include "Scene.h"
 #include "GameConfig.h"
+#include "Player.h"
 
 void Asteroid::Init()
 {
@@ -141,7 +142,6 @@ void Asteroid::ReceiveDamage(bool destroy)
     m_CurrentLifePoints--;
     if (m_CurrentLifePoints <= 0)
     {
-       
         SetCurrentTextureID(m_ExplosionTextureID);
         Engine::Instance()->m_Audio->PlaySoundEffect(m_ExplosionSoundID);
 
@@ -175,16 +175,20 @@ void Asteroid::ReceiveDamage(bool destroy)
             asteroid->m_Direction.y = directionY;
         }
 
+        Player* player = m_Scene->GetPlayer();
+        ASSERT(player);
+
         if (m_NumberOfChunks > 0)
         {
             SetPosition(m_Position.x - 25, m_Position.y - 15);
             SetScale(1.0f, 1.0f);
-            
+            player->AddScore(BIG_ASTEROID_POINTS);
         }
         else
         {
             SetPosition(m_Position.x - 20, m_Position.y - 15);
             SetScale(0.5f, 0.5f);
+            player->AddScore(CHUNK_ASTEROID_POINTS);
         }
         m_CurrentState = AsteroidState::DYING;
         SetCurrentAnimation(&m_DieAnimation);

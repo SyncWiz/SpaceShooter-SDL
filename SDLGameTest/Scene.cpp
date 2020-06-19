@@ -7,6 +7,7 @@
 #include <SDL_image.h>
 #include "GameConfig.h"
 #include "SpawnManager.h"
+#include "Player.h"
 
 Scene::Scene(int cameraSpeed, bool active) 
     : m_CameraSpeed(cameraSpeed)
@@ -23,6 +24,11 @@ Scene::~Scene()
 
 bool Scene::Start()
 {
+    m_MoveCamera = true;
+
+    Engine::Instance()->m_Renderer->m_Camera.x = 0;
+    Engine::Instance()->m_Renderer->m_Camera.y = SCREEN_HEIGHT;
+
     if (Engine::Instance()->m_Audio->PlayMusic("Assets/Sounds/MainSound.ogg") == false)
     {
         return false;
@@ -40,6 +46,7 @@ bool Scene::Start()
     {
         entity->Init();
     }
+    m_Player = m_SpawnManager->GetPlayer();
     return true;
 }
 

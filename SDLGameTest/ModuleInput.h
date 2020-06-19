@@ -42,5 +42,5 @@ public:
 
 private:
     bool      m_WindowEvents[WE_COUNT];
-    KeyState* m_Keyboard;
+    KeyState* m_Keyboard = nullptr;
 };

@@ -12,6 +12,7 @@ class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModuleCollision;
+class ModuleText;
 class Scene;
 
 struct SDL_Texture;
@@ -35,6 +36,7 @@ public:
     ModuleRender* m_Renderer;
     ModuleWindow* m_Window;
     ModuleTextures* m_Textures;
+    ModuleText* m_Text;
     ModuleInput* m_Input;
     ModuleAudio* m_Audio;
     ModuleFadeToBlack* m_FadeToBlack;

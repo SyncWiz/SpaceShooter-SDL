@@ -6,8 +6,8 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "Scene.h"
-
 #include "Bullet.h"
+#include "Player.h"
 
 void Enemy::Init()
 {
@@ -172,6 +172,10 @@ void Enemy::ReceiveDamage(bool destroy)
 
     if (m_CurrentLifePoints <= 0)
     {
+        Player* player = m_Scene->GetPlayer();
+        ASSERT(player);
+        player->AddScore(ENEMY_POINTS);
+       
         Engine::Instance()->m_Audio->PlaySoundEffect(m_ExplosionSoundID);
         SetPosition(m_Position.x - 10, m_Position.y -10);
         SetCurrentAnimation(&m_DieAnimation);

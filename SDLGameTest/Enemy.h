@@ -50,7 +50,7 @@ private:
     const char* m_ExplosionTexturePath;
     
     //Assets IDs
-    size_t m_ExplosionTextureID;
-    size_t m_ExplosionSoundID;
-    size_t m_ShootSoundID;
+    size_t m_ExplosionTextureID = 0;
+    size_t m_ExplosionSoundID = 0;
+    size_t m_ShootSoundID = 0;
 };

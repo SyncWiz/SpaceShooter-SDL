@@ -48,6 +48,6 @@ private:
     AsteroidState m_CurrentState = AsteroidState::IDLE;
 
     // Assets IDs
-    size_t m_ExplosionTextureID;
-    size_t m_ExplosionSoundID;
+    size_t m_ExplosionTextureID = 0;
+    size_t m_ExplosionSoundID = 0;
 };
