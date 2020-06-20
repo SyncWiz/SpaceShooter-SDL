@@ -11,6 +11,7 @@
 #include "ModuleText.h"
 #include "ModuleFadeToBlack.h"
 #include <string>
+#include <fstream>
 
 void Player::Init()
 {
@@ -60,6 +61,8 @@ void Player::Init()
     m_CurrentLifePoints = PLAYER_LIFE_POINTS;
 
     m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
+
+    m_MaxScore = GetMaxScoreFromFile();
    
     //Textures
     m_ExplosionTextureID = Engine::Instance()->m_Textures->LoadOrGet(m_ExplosionTexturePath);
@@ -76,11 +79,13 @@ void Player::Init()
 
 void Player::Update()
 {
+    DrawScore();
+    DrawMaxScore();
+
     switch (m_CurrentState)
     {
         case PlayerState::ACTIVE:
         {
-            DrawScore();
             HandleInput();
             Move();
             if (m_CurrentTimeToShoot >= m_TimeBetweenShoots)
@@ -115,6 +120,11 @@ void Player::Update()
         {
             if (m_CurrentAnimation->Finished())
             {
+                if (m_MaxScore < m_Score)
+                {
+                    SetMaxScore(m_Score);
+                }
+
                 ToDelete();
                 Engine::Instance()->m_FadeToBlack->FadeToBlack(m_Scene, m_Scene);
             }
@@ -278,4 +288,37 @@ void Player::DrawScore()
     scoreString = "Score: " + scoreString;
     char const* scoreChar = scoreString.c_str();
     Engine::Instance()->m_Text->DrawText(scoreChar, 50, SCREEN_WIDTH - 200, 0);
+}
+
+void Player::DrawMaxScore()
+{
+    std::string scoreString = std::to_string(m_MaxScore);
+    scoreString = "Max: " + scoreString;
+    char const* scoreChar = scoreString.c_str();
+    Engine::Instance()->m_Text->DrawText(scoreChar, 50, SCREEN_WIDTH - 400, 0);
+}
+
+int Player::GetMaxScoreFromFile()
+{
+    ifstream saveGame;
+    saveGame.open("Assets/SaveGame/score.txt");
+    int maxScore = 0;
+    if (saveGame.is_open())
+    {
+        saveGame >> maxScore;
+        saveGame.close();
+    }
+    return maxScore;
+}
+
+void Player::SetMaxScore(int score)
+{
+    m_MaxScore = score;
+
+    std::ofstream outFile("Assets/SaveGame/score.txt");
+    if (outFile.is_open())
+    {
+        outFile << score << std::endl;
+        outFile.close();
+    }
 }

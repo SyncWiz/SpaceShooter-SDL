@@ -105,6 +105,7 @@ bool Scene::CleanUp()
 
     m_SpawnManager->CleanUp();
     RELEASE(m_SpawnManager);
+    Engine::Instance()->m_Audio->CleanUpSoundEffects();
 
     return Engine::Instance()->m_Textures->CleanUp();
 }

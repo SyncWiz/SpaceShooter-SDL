@@ -140,6 +140,7 @@ void ModuleAudio::CleanUpSoundEffects()
             Mix_FreeChunk(it->second);
         }
     }
+    m_SoundEffects.clear();
 }
 
 size_t ModuleAudio::LoadOrGetSoundEffect(const char* path)

@@ -44,6 +44,9 @@ private:
     void ReceiveDamage();
     void DrawInvulnerabilityEffect();
     void DrawScore();
+    void DrawMaxScore();
+    int GetMaxScoreFromFile();
+    void SetMaxScore(int score);
 
 private:
     Animation m_IdleAnimation, m_DieAnimation;
@@ -53,6 +56,7 @@ private:
     int m_Width = 0;
     int m_Height = 0;
     int m_Score = 0;
+    int m_MaxScore = 0;
     iPoint m_Direction{ 0 , 0 };
     bool m_CanShoot = true;
     bool m_CanReceiveDamage = true;
