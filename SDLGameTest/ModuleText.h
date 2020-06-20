@@ -14,8 +14,8 @@ public:
     ~ModuleText()
     {}
 
-    bool Init();
-    bool CleanUp();
+    bool Init() override;
+    bool CleanUp() override;
 
     void DrawText(const char* text, int fontSize, int width, int height, int positionX, int positionY, const SDL_Color& textColor);
 };

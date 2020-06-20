@@ -18,7 +18,6 @@ ModuleCollision::ModuleCollision()
     m_CollisionMatrix[COLLIDER_BULLET_PLAYER][COLLIDER_ENEMY] = true;
 
     m_CollisionMatrix[COLLIDER_BULLET_ENEMY][COLLIDER_PLAYER] = true;
-
 }
 
 ModuleCollision::~ModuleCollision()
@@ -34,7 +33,9 @@ UpdateStatus ModuleCollision::PreUpdate()
             it = m_Colliders.erase(it);
         }
         else
+        {
             ++it;
+        }
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -62,10 +63,14 @@ UpdateStatus ModuleCollision::Update()
             if (previousCollider->CheckCollision(currentCollider->m_Rect) == true)
             {
                 if (m_CollisionMatrix[previousCollider->m_Type][currentCollider->m_Type] && previousCollider->m_CallbackEntity)
+                {
                     previousCollider->m_CallbackEntity->OnCollision(previousCollider, currentCollider);
+                }
 
                 if (m_CollisionMatrix[currentCollider->m_Type][previousCollider->m_Type] && currentCollider->m_CallbackEntity)
+                {
                     currentCollider->m_CallbackEntity->OnCollision(currentCollider, previousCollider);
+                }
             }
         }
     }
@@ -124,18 +129,19 @@ bool ModuleCollision::CleanUp()
     LOG("Freeing all colliders");
 
     for (list<Collider*>::iterator it = m_Colliders.begin(); it != m_Colliders.end(); ++it)
+    {
         RELEASE(*it);
-
+    }
     m_Colliders.clear();
 
     return true;
 }
 
 // Collider methods
-bool Collider::CheckCollision(const SDL_Rect& r) const
+bool Collider::CheckCollision(const SDL_Rect& rect) const
 {
-    return (m_Rect.x < r.x + r.w &&
-        m_Rect.x + m_Rect.w > r.x &&
-        m_Rect.y < r.y + r.h &&
-        m_Rect.h + m_Rect.y > r.y);
+    return (m_Rect.x < rect.x + rect.w &&
+        m_Rect.x + m_Rect.w > rect.x &&
+        m_Rect.y < rect.y + rect.h &&
+        m_Rect.h + m_Rect.y > rect.y);
 }

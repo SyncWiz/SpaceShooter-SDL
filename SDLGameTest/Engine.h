@@ -33,17 +33,17 @@ public:
     double GetDT() const { return m_DT; }
 
 public:
-    ModuleRender* m_Renderer;
-    ModuleWindow* m_Window;
-    ModuleTextures* m_Textures;
-    ModuleText* m_Text;
-    ModuleInput* m_Input;
-    ModuleAudio* m_Audio;
-    ModuleFadeToBlack* m_FadeToBlack;
-    ModuleCollision* m_Collisions;
+    ModuleRender* m_Renderer = nullptr;
+    ModuleWindow* m_Window = nullptr;
+    ModuleTextures* m_Textures = nullptr;
+    ModuleText* m_Text = nullptr;
+    ModuleInput* m_Input = nullptr;
+    ModuleAudio* m_Audio = nullptr;
+    ModuleFadeToBlack* m_FadeToBlack = nullptr;
+    ModuleCollision* m_Collisions = nullptr;
 
     //Game
-    Scene* m_MainGameScene;
+    Scene* m_MainGameScene = nullptr;
 
 private:
     static Engine* s_Instance;

@@ -17,17 +17,16 @@ enum ColliderType
     COLLIDER_MAX
 };
 
-
 struct Collider
 {
     SDL_Rect m_Rect = { 0,0,0,0 };
     bool m_Delete = false;
     bool m_Active = true;
-    ColliderType m_Type;
+    ColliderType m_Type = ColliderType::COLLIDER_MAX;
 
-    Entity* m_CallbackEntity;
+    Entity* m_CallbackEntity = nullptr;
 
-    Collider(SDL_Rect rectangle, ColliderType type, Entity* callback = NULL) :
+    Collider(const SDL_Rect& rectangle, ColliderType type, Entity* callback = NULL) :
         m_Rect(rectangle), m_Type(type), m_CallbackEntity(callback)
     {}
 

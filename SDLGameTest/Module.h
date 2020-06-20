@@ -20,7 +20,9 @@ public:
     bool Enable()
     {
         if (m_Active == false)
+        {
             return m_Active = Start();
+        }
 
         return true;
     }
@@ -28,7 +30,9 @@ public:
     bool Disable()
     {
         if (m_Active == true)
+        {
             return m_Active = !CleanUp();
+        }
 
         return true;
     }

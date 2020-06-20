@@ -40,7 +40,10 @@ public:
 
     void SetCurrentAnimation(Animation* animation)
     {
-        m_CurrentAnimation = animation;
+        if (animation != nullptr)
+        {
+            m_CurrentAnimation = animation;
+        }
     }
 
     void SetColliderOffset(const iPoint& offset)
@@ -59,7 +62,7 @@ public:
         m_Active = false;
     }
 
-    bool IsActive()
+    bool IsActive() const
     {
         return m_Active;
     }

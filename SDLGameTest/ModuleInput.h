@@ -30,9 +30,8 @@ public:
 
     UpdateStatus PreUpdate() override;
 
-    bool CleanUp();
+    bool CleanUp() override;
 
-    // Check key states (includes mouse and joy buttons)
     KeyState GetKey(int id) const
     {
         return m_Keyboard[id];

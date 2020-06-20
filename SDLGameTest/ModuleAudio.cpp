@@ -16,6 +16,7 @@ bool ModuleAudio::Init()
     if (SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
     {
         LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
+        ASSERT(false);
         ret = false;
     }
 
@@ -158,7 +159,6 @@ size_t ModuleAudio::LoadOrGetSoundEffect(const char* path)
     if (chunk == nullptr)
     {
         LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
-        ASSERT(false);
     }
     else
     {
@@ -172,7 +172,6 @@ bool ModuleAudio::PlaySoundEffect(size_t id, int repeat)
 {
     bool ret = false;
     Mix_Chunk* soundEffect = m_SoundEffects[id];
-    ASSERT(soundEffect);
 
     if (soundEffect)
     {

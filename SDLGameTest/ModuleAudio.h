@@ -19,8 +19,8 @@ public:
     ~ModuleAudio()
     {}
 
-    bool Init();
-    bool CleanUp();
+    bool Init() override;
+    bool CleanUp() override;
 
     bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
     void StopMusic();

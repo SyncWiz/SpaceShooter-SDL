@@ -39,6 +39,7 @@ bool ModuleRender::Init()
     if (m_Renderer == nullptr)
     {
         LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
+        ASSERT(false);
         ret = false;
     }
 
@@ -74,6 +75,12 @@ bool ModuleRender::Blit(size_t textureID, int x, int y, SDL_Rect* section, float
 {
     ASSERT(Engine::Instance()->m_Textures->GetTexture(textureID));
     SDL_Texture* texture = Engine::Instance()->m_Textures->GetTexture(textureID);
+
+    if (texture == nullptr)
+    {
+        LOG("Cannot blit to screen texture %i because it's not loaded", textureID);
+        return false;
+    }
 
     bool ret = true;
     SDL_Rect rect;

@@ -7,14 +7,14 @@
 
 bool ModuleText::Init()
 {
-    bool retVal = true;
+    bool ret = true;
     if (TTF_Init() == -1)
     {
         LOG("Error Initialazing TTF library!");
         ASSERT(false);
-        retVal = false;
+        ret = false;
     }
-    return retVal;
+    return ret;
 }
 
 bool ModuleText::CleanUp()
