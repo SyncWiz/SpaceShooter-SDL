@@ -45,6 +45,7 @@ private:
     void DrawInvulnerabilityEffect();
     void DrawScore();
     void DrawMaxScore();
+    void DrawDeathText();
     int GetMaxScoreFromFile();
     void SetMaxScore(int score);
 

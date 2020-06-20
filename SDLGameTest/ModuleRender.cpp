@@ -11,8 +11,8 @@ ModuleRender::ModuleRender() : Module()
 {
     m_Camera.x = 0; 
     m_Camera.y = SCREEN_HEIGHT;
-    m_Camera.w = SCREEN_WIDTH * SCREEN_SIZE;
-    m_Camera.h = SCREEN_HEIGHT * SCREEN_SIZE;
+    m_Camera.w = SCREEN_WIDTH;
+    m_Camera.h = SCREEN_HEIGHT;
 }
 
 ModuleRender::~ModuleRender()
@@ -77,8 +77,8 @@ bool ModuleRender::Blit(size_t textureID, int x, int y, SDL_Rect* section, float
 
     bool ret = true;
     SDL_Rect rect;
-    rect.x = (int)(m_Camera.x * speed) + x * SCREEN_SIZE;
-    rect.y = (int)(m_Camera.y * speed) + y * SCREEN_SIZE;
+    rect.x = (int)(m_Camera.x * speed) + x ;
+    rect.y = (int)(m_Camera.y * speed) + y ;
 
     if (section != NULL)
     {
@@ -90,8 +90,8 @@ bool ModuleRender::Blit(size_t textureID, int x, int y, SDL_Rect* section, float
         SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
     }
 
-    rect.w *= scaleX * SCREEN_SIZE;
-    rect.h *= scaleY * SCREEN_SIZE;
+    rect.w *= scaleX;
+    rect.h *= scaleY;
 
     if (SDL_RenderCopy(m_Renderer, texture, section, &rect) != 0)
     {
@@ -108,8 +108,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
 
     bool ret = true;
     SDL_Rect rect;
-    rect.x = (int)(m_Camera.x * speed) + x * SCREEN_SIZE;
-    rect.y = (int)(m_Camera.y * speed) + y * SCREEN_SIZE;
+    rect.x = (int)(m_Camera.x * speed) + x;
+    rect.y = (int)(m_Camera.y * speed) + y;
 
     if (section != NULL)
     {
@@ -121,8 +121,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, f
         SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
     }
 
-    rect.w *= scaleX * SCREEN_SIZE;
-    rect.h *= scaleY * SCREEN_SIZE;
+    rect.w *= scaleX;
+    rect.h *= scaleY;
 
     if (SDL_RenderCopy(m_Renderer, texture, section, &rect) != 0)
     {
@@ -143,10 +143,8 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
     SDL_Rect rec(rect);
     if (use_camera)
     {
-        rec.x = (int)(m_Camera.x + rect.x * SCREEN_SIZE);
-        rec.y = (int)(m_Camera.y + rect.y * SCREEN_SIZE);
-        rec.w *= SCREEN_SIZE;
-        rec.h *= SCREEN_SIZE;
+        rec.x = (int)(m_Camera.x + rect.x);
+        rec.y = (int)(m_Camera.y + rect.y);
     }
 
     if (SDL_RenderFillRect(m_Renderer, &rec) != 0)

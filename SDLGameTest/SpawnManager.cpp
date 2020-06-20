@@ -35,18 +35,18 @@ void SpawnManager::Update()
             {
             case SpawnType::ENEMY:
             {
-                if (spawnPosition.x + 50 > SCREEN_WIDTH * SCREEN_SIZE)
+                if (spawnPosition.x + 50 > SCREEN_WIDTH)
                 {
-                    spawnPosition.x = (SCREEN_WIDTH * SCREEN_SIZE) - 50;
+                    spawnPosition.x = (SCREEN_WIDTH) - 50;
                 }
                 AddEnemy(spawnPosition);
             }
             break;
             case SpawnType::ASTEROID:
             {
-                if (spawnPosition.x + 200 > SCREEN_WIDTH * SCREEN_SIZE)
+                if (spawnPosition.x + 200 > SCREEN_WIDTH)
                 {
-                    spawnPosition.x = SCREEN_WIDTH * SCREEN_SIZE;
+                    spawnPosition.x = SCREEN_WIDTH;
                 }
                 AddAsteroid(spawnPosition);
             }
@@ -75,5 +75,5 @@ void SpawnManager::AddEnemy(const iPoint& position)
 
 void SpawnManager::AddAsteroid(const iPoint& position)
 {
-    m_Scene->Instantiate<Asteroid>(ENEMY_EXPLOSION_PATH, MathUtils::GetRandomInRange(2, 8), ASTEROID_LIFE_POINTS, ASTEROID_COLLIDER_SIZE, ASTEROID_COLLIDER_SIZE, 0, ASTEROID_PATH, fPoint(ASTEROID_SCALE, ASTEROID_SCALE), position, m_Scene);
+    m_Scene->Instantiate<Asteroid>(iPoint(24, 17), ENEMY_EXPLOSION_PATH, MathUtils::GetRandomInRange(2, 8), ASTEROID_LIFE_POINTS, ASTEROID_COLLIDER_SIZE, ASTEROID_COLLIDER_SIZE, 0, ASTEROID_PATH, fPoint(ASTEROID_SCALE, ASTEROID_SCALE), position, m_Scene);
 }

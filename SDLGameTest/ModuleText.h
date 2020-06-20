@@ -17,5 +17,5 @@ public:
     bool Init();
     bool CleanUp();
 
-    void DrawText(const char* text, int size, int positionX, int positionY);
+    void DrawText(const char* text, int fontSize, int width, int height, int positionX, int positionY, const SDL_Color& textColor);
 };

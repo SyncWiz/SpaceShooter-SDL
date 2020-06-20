@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Point.h"
+#include "GameConfig.h"
 
 class Scene;
 class Player;
@@ -39,6 +40,6 @@ private:
     Scene* m_Scene = nullptr;
     Player* m_Player = nullptr;
     double m_CurrentTimeToSpawn = 2000;
-    double m_TimeBetweenSpawns = 2000;
+    double m_TimeBetweenSpawns = TIME_BETWEEN_SPAWNS;
     int m_CameraYOffsetToSpawn = 0;
 };

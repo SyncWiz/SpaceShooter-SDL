@@ -60,7 +60,9 @@ void Player::Init()
     SetCurrentAnimation(&m_IdleAnimation);
     m_CurrentLifePoints = PLAYER_LIFE_POINTS;
 
-    m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x, m_Position.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
+    m_ColliderOffset.x = 22;
+    m_ColliderOffset.y = 20;
+    m_Collider = Engine::Instance()->m_Collisions->AddCollider({ m_Position.x + m_ColliderOffset.x, m_Position.y + m_ColliderOffset.y, m_Width, m_Height }, COLLIDER_PLAYER, this);
 
     m_MaxScore = GetMaxScoreFromFile();
    
@@ -79,13 +81,12 @@ void Player::Init()
 
 void Player::Update()
 {
-    DrawScore();
-    DrawMaxScore();
-
     switch (m_CurrentState)
     {
         case PlayerState::ACTIVE:
         {
+            DrawScore();
+            DrawMaxScore();
             HandleInput();
             Move();
             if (m_CurrentTimeToShoot >= m_TimeBetweenShoots)
@@ -120,13 +121,11 @@ void Player::Update()
         {
             if (m_CurrentAnimation->Finished())
             {
-                if (m_MaxScore < m_Score)
+                DrawDeathText();
+                if (Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN || Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_RETURN2) == KeyState::KEY_DOWN)
                 {
-                    SetMaxScore(m_Score);
+                    Engine::Instance()->m_FadeToBlack->FadeToBlack(m_Scene, m_Scene);
                 }
-
-                ToDelete();
-                Engine::Instance()->m_FadeToBlack->FadeToBlack(m_Scene, m_Scene);
             }
             Entity::Update();
         }
@@ -268,6 +267,11 @@ void Player::ReceiveDamage()
         m_Scene->StopCamera();
         m_CurrentState = PlayerState::DYING;
         Engine::Instance()->m_Audio->PlaySoundEffect(m_ExplosionSoundID);
+
+        if (m_MaxScore < m_Score)
+        {
+            SetMaxScore(m_Score);
+        }
     }
     else
     {
@@ -287,7 +291,7 @@ void Player::DrawScore()
     std::string scoreString = std::to_string(m_Score);
     scoreString = "Score: " + scoreString;
     char const* scoreChar = scoreString.c_str();
-    Engine::Instance()->m_Text->DrawText(scoreChar, 50, SCREEN_WIDTH - 200, 0);
+    Engine::Instance()->m_Text->DrawText(scoreChar, 80, 100, 50, SCREEN_WIDTH - 200, 0, { 255, 255, 255 });
 }
 
 void Player::DrawMaxScore()
@@ -295,7 +299,13 @@ void Player::DrawMaxScore()
     std::string scoreString = std::to_string(m_MaxScore);
     scoreString = "Max: " + scoreString;
     char const* scoreChar = scoreString.c_str();
-    Engine::Instance()->m_Text->DrawText(scoreChar, 50, SCREEN_WIDTH - 400, 0);
+    Engine::Instance()->m_Text->DrawText(scoreChar, 80, 100, 50, SCREEN_WIDTH - 400, 0, { 255, 255, 255 });
+}
+
+void Player::DrawDeathText()
+{
+    Engine::Instance()->m_Text->DrawText("YOU DIED!", 200, 400, 200, SCREEN_WIDTH - 600,  300, { 255, 0, 0 });
+    Engine::Instance()->m_Text->DrawText("Press Enter to Restart", 100, 400, 50, SCREEN_WIDTH - 600,  500, { 255, 255, 255 });
 }
 
 int Player::GetMaxScoreFromFile()

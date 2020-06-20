@@ -56,8 +56,6 @@ void Asteroid::Update()
             if (MathUtils::IsPointInsideCameraView(m_Position))
             {
                 m_CurrentState = AsteroidState::ACTIVE;
-                m_ColliderOffset.x = 14;
-                m_ColliderOffset.y = 10; 
             }
         }
         break;
@@ -152,7 +150,8 @@ void Asteroid::ReceiveDamage(bool destroy)
             iPoint initialPosition = m_Position;
             initialPosition.x += 50;
             initialPosition.y += 50;
-            Asteroid* asteroid = m_Scene->Instantiate<Asteroid>(ENEMY_EXPLOSION_PATH, 0, ASTEROID_CHUNK_LIFE_POINTS, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_COLLIDER_SIZE, MathUtils::GetRandomInRange(1, 3), ASTEROID_CHUNK_PATH, fPoint(ASTEROID_CHUNK_SCALE, ASTEROID_CHUNK_SCALE), initialPosition, m_Scene);
+
+            Asteroid* asteroid = m_Scene->Instantiate<Asteroid>(iPoint(14, 10), ENEMY_EXPLOSION_PATH, 0, ASTEROID_CHUNK_LIFE_POINTS, ASTEROID_CHUNK_COLLIDER_SIZE, ASTEROID_CHUNK_COLLIDER_SIZE, MathUtils::GetRandomInRange(1, 3), ASTEROID_CHUNK_PATH, fPoint(ASTEROID_CHUNK_SCALE, ASTEROID_CHUNK_SCALE), initialPosition, m_Scene);
             
             int directionX, directionY;
             directionX = MathUtils::GetRandomInRange(-1, 1);

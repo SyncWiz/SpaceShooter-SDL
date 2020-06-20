@@ -17,7 +17,7 @@ namespace MathUtils
     {
         iPoint cameraPosition{ Engine::Instance()->m_Renderer->m_Camera.x, Engine::Instance()->m_Renderer->m_Camera.y };
         int positionCameraViewY = (-point.y) + SCREEN_HEIGHT;
-        if (point.x < 0 || point.x > SCREEN_WIDTH * SCREEN_SIZE || positionCameraViewY > cameraPosition.y + SCREEN_HEIGHT * SCREEN_SIZE || positionCameraViewY < cameraPosition.y)
+        if (point.x < 0 || point.x > SCREEN_WIDTH || positionCameraViewY > cameraPosition.y + SCREEN_HEIGHT || positionCameraViewY < cameraPosition.y)
         {
             return false;
         }
@@ -37,7 +37,7 @@ namespace MathUtils
 
     static int GetRandomPositionInCameraRangeX()
     {
-        return GetRandomInRange(0, SCREEN_WIDTH * SCREEN_SIZE);
+        return GetRandomInRange(0, SCREEN_WIDTH );
     }
 }
 

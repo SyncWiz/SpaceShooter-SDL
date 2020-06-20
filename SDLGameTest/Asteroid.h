@@ -17,7 +17,7 @@ class Asteroid : public Entity
 
 public:
 
-    Asteroid(const char* explosionTexturePath, int numberOfChunks, int lifePoints, int width, int height, int speed, const char* texturePath, const fPoint& textureScale, const iPoint& initialPosition, Scene* scene, bool active = true)
+    Asteroid(const iPoint& colliderOffset, const char* explosionTexturePath, int numberOfChunks, int lifePoints, int width, int height, int speed, const char* texturePath, const fPoint& textureScale, const iPoint& initialPosition, Scene* scene, bool active = true)
         : Entity(texturePath, textureScale, initialPosition, scene, active)
         , m_ExplosionTexturePath(explosionTexturePath)
         , m_NumberOfChunks(numberOfChunks)
@@ -25,7 +25,9 @@ public:
         , m_Width(width)
         , m_Height(height)
         , m_Speed(speed)
-    {}
+    {
+        SetColliderOffset(colliderOffset);
+    }
 
     void Init() override;
     void Update() override;

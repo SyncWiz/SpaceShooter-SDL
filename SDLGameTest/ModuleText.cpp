@@ -23,17 +23,15 @@ bool ModuleText::CleanUp()
     return true;
 }
 
-void ModuleText::DrawText(const char* text, int size, int positionX, int positionY)
+void ModuleText::DrawText(const char* text, int fontSize, int width, int height, int positionX, int positionY, const SDL_Color& textColor)
 {
-    TTF_Font* font = TTF_OpenFont("Assets/Fonts/arial.ttf", size);
+    TTF_Font* font = TTF_OpenFont("Assets/Fonts/arial.ttf", fontSize);
 
     if (font == nullptr)
     {
         LOG("TTF_OpenFont: %s\n", TTF_GetError());
         ASSERT(false);
     }
-
-    SDL_Color textColor = { 255, 255, 255 };
 
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
 
@@ -49,8 +47,8 @@ void ModuleText::DrawText(const char* text, int size, int positionX, int positio
     SDL_Rect textRect; 
     textRect.x = positionX;
     textRect.y = positionY;
-    textRect.w = size * 2;
-    textRect.h = size;
+    textRect.w = width;
+    textRect.h = height;
 
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
 

@@ -8,8 +8,13 @@
 
 void HealthBar::Update()
 {
-    int yPosition;
-    yPosition = m_Position.y - MAIN_GAME_CAMERA_SPEED;
+    int yPosition = m_Position.y;
+#ifdef _DEBUG
+    if (MOVE_MAIN_CAMERA)
+#endif
+    {
+        yPosition -= MAIN_GAME_CAMERA_SPEED;
+    }
 
     for (int i = 0; i < m_Player->GetLifePoints(); ++i)
     {
@@ -18,3 +23,4 @@ void HealthBar::Update()
 
     m_Position.y = yPosition;
 }
+
