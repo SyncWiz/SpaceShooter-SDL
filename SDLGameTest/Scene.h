@@ -14,8 +14,7 @@ class Scene : public Module
 {
 public:
 
-    Scene(int cameraSpeed = 0, bool active = true);
-    virtual ~Scene();
+    Scene(const char* backgroundPath, int cameraSpeed = 0, bool active = true);
 
     bool Start() override;
     UpdateStatus PreUpdate() override;
@@ -40,6 +39,7 @@ public:
 
 private:
     void MoveCamera();
+    void DrawBackground();
 
 private:
     std::list<Entity*> m_Entities;
@@ -49,6 +49,10 @@ private:
 
     int m_CameraSpeed = 0;
     bool m_MoveCamera = false;
+    const char* m_BackgroundPath = nullptr;
+
+    //Background
+    size_t m_BackgroundTextureID = 0;
 };
 
 template <typename EntityToAdd, class... Arguments, typename Enable>

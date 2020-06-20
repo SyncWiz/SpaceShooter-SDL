@@ -33,30 +33,30 @@ void SpawnManager::Update()
 
             switch (entityToSpawn)
             {
-            case SpawnType::ENEMY:
-            {
-                if (spawnPosition.x + 50 > SCREEN_WIDTH)
+                case SpawnType::ENEMY:
                 {
-                    spawnPosition.x = (SCREEN_WIDTH) - 50;
+                    if (spawnPosition.x + 50 > SCREEN_WIDTH)
+                    {
+                        spawnPosition.x = (SCREEN_WIDTH) - 50;
+                    }
+                    AddEnemy(spawnPosition);
                 }
-                AddEnemy(spawnPosition);
-            }
-            break;
-            case SpawnType::ASTEROID:
-            {
-                if (spawnPosition.x + 200 > SCREEN_WIDTH)
+                break;
+                case SpawnType::ASTEROID:
                 {
-                    spawnPosition.x = SCREEN_WIDTH;
+                    if (spawnPosition.x + 200 > SCREEN_WIDTH)
+                    {
+                        spawnPosition.x = SCREEN_WIDTH;
+                    }
+                    AddAsteroid(spawnPosition);
                 }
-                AddAsteroid(spawnPosition);
-            }
-            break;
-            default:
-            {
-                ASSERT(false);
-                LOG("Invalid Spawn Type!");
-            }
-            break;
+                break;
+                default:
+                {
+                    ASSERT(false);
+                    LOG("Invalid Spawn Type!");
+                }
+                break;
             }
             m_CurrentTimeToSpawn = 0;
         }

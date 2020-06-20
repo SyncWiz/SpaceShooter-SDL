@@ -102,37 +102,6 @@ bool ModuleRender::Blit(size_t textureID, int x, int y, SDL_Rect* section, float
     return ret;
 }
 
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float scaleX, float scaleY, float speed)
-{
-    ASSERT(texture);
-
-    bool ret = true;
-    SDL_Rect rect;
-    rect.x = (int)(m_Camera.x * speed) + x;
-    rect.y = (int)(m_Camera.y * speed) + y;
-
-    if (section != NULL)
-    {
-        rect.w = section->w;
-        rect.h = section->h;
-    }
-    else
-    {
-        SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-    }
-
-    rect.w *= scaleX;
-    rect.h *= scaleY;
-
-    if (SDL_RenderCopy(m_Renderer, texture, section, &rect) != 0)
-    {
-        LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-        ret = false;
-    }
-
-    return ret;
-}
-
 bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
 {
     bool ret = true;

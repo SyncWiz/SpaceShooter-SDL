@@ -13,7 +13,6 @@
 
 //Game
 #include "GameConfig.h"
-#include "Player.h"
 
 using namespace std;
 
@@ -33,7 +32,7 @@ Engine::Engine()
     /////
 
     //Game Modules
-    m_Modules.push_back(m_MainGameScene = new Scene(MAIN_GAME_CAMERA_SPEED, true));
+    m_Modules.push_back(m_MainGameScene = new Scene("Assets/Background/background.jpg", MAIN_GAME_CAMERA_SPEED, true));
     /////
 
     //Engine Modules

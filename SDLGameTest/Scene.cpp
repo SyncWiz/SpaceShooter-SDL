@@ -9,8 +9,9 @@
 #include "SpawnManager.h"
 #include "Player.h"
 
-Scene::Scene(int cameraSpeed, bool active) 
+Scene::Scene(const char* backgroundPath, int cameraSpeed, bool active) 
     : m_CameraSpeed(cameraSpeed)
+    , m_BackgroundPath(backgroundPath)
     , Module(active)
 {
     if (m_CameraSpeed != 0)
@@ -19,15 +20,17 @@ Scene::Scene(int cameraSpeed, bool active)
     }
 }
 
-Scene::~Scene()
-{}
-
 bool Scene::Start()
 {
     m_MoveCamera = true;
 
     Engine::Instance()->m_Renderer->m_Camera.x = 0;
     Engine::Instance()->m_Renderer->m_Camera.y = SCREEN_HEIGHT;
+
+    if (m_BackgroundPath != nullptr)
+    {
+        m_BackgroundTextureID = Engine::Instance()->m_Textures->LoadOrGet(m_BackgroundPath);
+    }
 
     if (Engine::Instance()->m_Audio->PlayMusic("Assets/Sounds/MainSound.ogg") == false)
     {
@@ -74,6 +77,7 @@ UpdateStatus Scene::Update()
 {
     if (m_Active)
     {
+        DrawBackground();
         m_SpawnManager->Update();
         if (m_MoveCamera)
         {
@@ -117,5 +121,13 @@ void Scene::MoveCamera()
 #endif
     {
         Engine::Instance()->m_Renderer->m_Camera.y += m_CameraSpeed;
+    }
+}
+
+void Scene::DrawBackground()
+{
+    if (m_BackgroundTextureID != 0)
+    {
+        Engine::Instance()->m_Renderer->Blit(m_BackgroundTextureID, 0, -(Engine::Instance()->m_Renderer->m_Camera.y), nullptr, 1.0f, 1.0f);
     }
 }
