@@ -4,7 +4,7 @@ Asteroids! is a 2D endless space shooter made with C++ and SDL Framework within 
 
 # Game
 
-The game consists of kill as much as you can while you have life points. Destroying asteroids and enemy ships will give you points and the max score is persistent between games. If you get hit 5 times you'll die and the "You died!" screen will show up, press enter to restart. 
+The game consists in killing as much as you can while you have life points. Destroying asteroids and enemy ships will give you points and the max score is persistent between games. If you get hit 5 times you'll die and the "You died!" screen will show up, press enter to restart. 
 All the enemy's generation is procedural so each time you launch or restart the game you'll have a different experience.
 
 # Controls
@@ -25,5 +25,8 @@ Big rock with high health. When destroying it spawns smaller chunks with lower h
 ![Image](https://i.imgur.com/XaqXTr8.png)
 
 They move randomly from one side to the other at a random speed. They can also be static.
+
+#Demo
+![Link](https://youtu.be/hp5MEyn_ZUE)
 
 
