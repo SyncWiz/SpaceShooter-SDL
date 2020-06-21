@@ -119,7 +119,7 @@ void Player::Update()
 
         case PlayerState::DYING:
         {
-            if (m_CurrentAnimation->Finished())
+            if (m_CurrentAnimation != nullptr && m_CurrentAnimation->Finished())
             {
                 DrawDeathText();
                 if (Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN || Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_RETURN2) == KeyState::KEY_DOWN)
