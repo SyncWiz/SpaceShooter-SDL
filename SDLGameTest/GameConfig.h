@@ -10,6 +10,7 @@
 #define PLAYER_SCALE 0.2f
 #define PLAYER_INITIAL_POSITION_X 350
 #define PLAYER_INITIAL_POSITION_Y -200
+#define PLAYER_HEALTH_POINT_PATH "Assets/Player/healthbar.png"
 
 //Player Bullet
 #define PLAYER_BULLET_PATH "Assets/Player/bullet.png"
