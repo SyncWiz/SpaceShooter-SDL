@@ -103,7 +103,9 @@ COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(Tar
     </Link>
     <PostBuildEvent>
       <Command>COPY $(SolutionDir)\Libraries\SDL2-2.0.10\lib\$(PlatformTarget)\*.dll $(TargetDir)\
-COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(TargetDir)\</Command>
+COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(TargetDir)\
+COPY $(SolutionDir)\Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(TargetDir)\
+COPY $(SolutionDir)\Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\*.dll $(TargetDir)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,7 +149,9 @@ COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(Tar
     </Link>
     <PostBuildEvent>
       <Command>COPY $(SolutionDir)\Libraries\SDL2-2.0.10\lib\$(PlatformTarget)\*.dll $(TargetDir)\
-COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(TargetDir)\</Command>
+COPY $(SolutionDir)\Libraries\SDL2_image-2.0.5\lib\$(PlatformTarget)\*.dll $(TargetDir)\
+COPY $(SolutionDir)\Libraries\SDL2_mixer-2.0.4\lib\$(PlatformTarget)\*.dll $(TargetDir)\
+COPY $(SolutionDir)\Libraries\SDL2_ttf-2.0.15\lib\$(PlatformTarget)\*.dll $(TargetDir)\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
