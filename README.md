@@ -14,6 +14,13 @@ All the enemy's generation is procedural so each time you launch or restart the 
 * Escape - Exits Game
 * Enter - Restarts the Game when you reach the "You died!" screen.
 
+# Player
+## Invulnerability
+
+![Image](https://i.imgur.com/tfGkZ54.png)
+
+Player when receives damage (Being hit by an enemy bullet or asteroid/enemy), it starts an invulnerability time frame where player doesn't detect collisions and force field is displayed. A sound is played to notify users that the invulnerability has ended.
+
 # Obstacles
 ## Asteroid
 ![Image](https://i.imgur.com/vRdEOor.png)
