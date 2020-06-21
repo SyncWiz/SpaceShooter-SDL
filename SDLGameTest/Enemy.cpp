@@ -11,6 +11,9 @@
 
 void Enemy::Init()
 {
+    m_DistanceToChangeTarget = ENEMY_DISTANCE_CHANGE_TARGET;
+    m_TimeBetweenShoots = ENEMY_TIME_BETWEEN_SHOOTS;
+
     int lenght = 512;
     m_IdleAnimation.m_Frames.push_back({ 0, 0, lenght, lenght });
     m_IdleAnimation.m_Frames.push_back({ lenght, 0, lenght, lenght });

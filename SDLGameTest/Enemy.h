@@ -40,14 +40,14 @@ private:
     int m_Speed = 0;
     int m_Width = 0;
     int m_Height = 0;
-    float m_DistanceToChangeTarget = 10.0f;
+    float m_DistanceToChangeTarget = 0;
     iPoint m_Direction{ 0 , 0 };
     iPoint m_TargetPosition{ 0, 0 };
     EnemyState m_CurrentState = EnemyState::IDLE;
     double m_CurrentTimeToShoot = 0;
-    double m_TimeBetweenShoots = 1000;
+    double m_TimeBetweenShoots = 0;
     bool m_CanShoot = true;
-    const char* m_ExplosionTexturePath;
+    const char* m_ExplosionTexturePath = nullptr;
     
     //Assets IDs
     size_t m_ExplosionTextureID = 0;

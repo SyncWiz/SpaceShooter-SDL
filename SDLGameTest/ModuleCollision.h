@@ -22,7 +22,7 @@ struct Collider
     SDL_Rect m_Rect = { 0,0,0,0 };
     bool m_Delete = false;
     bool m_Active = true;
-    ColliderType m_Type = ColliderType::COLLIDER_MAX;
+    ColliderType m_Type = ColliderType::COLLIDER_NONE;
 
     Entity* m_CallbackEntity = nullptr;
 
@@ -61,7 +61,7 @@ struct Collider
         m_Active = false;
     }
 
-    bool CheckCollision(const SDL_Rect& r) const;
+    bool CheckCollision(const SDL_Rect& rect) const;
 };
 
 class ModuleCollision : public Module

@@ -66,7 +66,9 @@ UpdateStatus Scene::PreUpdate()
                 it = m_Entities.erase(it);
             }
             else
+            {
                 ++it;
+            }
         }
     }
 

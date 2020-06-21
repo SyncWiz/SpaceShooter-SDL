@@ -30,19 +30,18 @@ void ModuleText::DrawText(const char* text, int fontSize, int width, int height,
     if (font == nullptr)
     {
         LOG("TTF_OpenFont: %s\n", TTF_GetError());
-        ASSERT(false);
+        return;
     }
 
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
 
     if (textSurface == nullptr)
     {
-        LOG("TTF_OpenFont: %s\n", TTF_GetError());
-        ASSERT(false);
+        LOG("Cannot Draw Text: %s\n", TTF_GetError());
+        return;
     }
     SDL_Renderer* renderer = Engine::Instance()->m_Renderer->m_Renderer;
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-
 
     SDL_Rect textRect; 
     textRect.x = positionX;

@@ -43,7 +43,6 @@ private:
 
 private:
     std::list<Entity*> m_Entities;
-    SDL_Texture* m_Background = nullptr;
     SpawnManager* m_SpawnManager = nullptr;
     Player* m_Player = nullptr;
 

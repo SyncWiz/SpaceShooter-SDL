@@ -34,6 +34,8 @@
 #define ENEMY_LIFE_POINTS 4
 #define ENEMY_COLLIDER_SIZE 100
 #define ENEMY_POINTS 150
+#define ENEMY_TIME_BETWEEN_SHOOTS 1000
+#define ENEMY_DISTANCE_CHANGE_TARGET 10
 
 //Asteroid
 #define ASTEROID_PATH "Assets/Aestroids/aestroid_brown.png"

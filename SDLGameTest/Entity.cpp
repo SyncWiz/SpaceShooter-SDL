@@ -29,7 +29,7 @@ void Entity::Update()
 
 void Entity::CleanUp()
 {
-    if (m_Collider)
+    if (m_Collider != nullptr)
     {
         m_Collider->ToDelete();
     }

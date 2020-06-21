@@ -50,16 +50,24 @@ UpdateStatus ModuleInput::PreUpdate()
         if (keys[i] == 1)
         {
             if (m_Keyboard[i] == KeyState::KEY_IDLE)
+            {
                 m_Keyboard[i] = KeyState::KEY_DOWN;
+            }
             else
+            {
                 m_Keyboard[i] = KeyState::KEY_REPEAT;
+            }
         }
         else
         {
             if (m_Keyboard[i] == KeyState::KEY_REPEAT || m_Keyboard[i] == KeyState::KEY_DOWN)
+            {
                 m_Keyboard[i] = KeyState::KEY_UP;
+            }
             else
+            {
                 m_Keyboard[i] = KeyState::KEY_IDLE;
+            }
         }
     }
 
@@ -67,32 +75,42 @@ UpdateStatus ModuleInput::PreUpdate()
     {
         switch (event.type)
         {
-        case SDL_QUIT:
-            m_WindowEvents[EventWindow::WE_QUIT] = true;
+            case SDL_QUIT:
+            {
+                m_WindowEvents[EventWindow::WE_QUIT] = true;
+            }
             break;
 
-        case SDL_WINDOWEVENT:
-            switch (event.window.event)
+            case SDL_WINDOWEVENT:
             {
-            case SDL_WINDOWEVENT_HIDDEN:
-            case SDL_WINDOWEVENT_MINIMIZED:
-            case SDL_WINDOWEVENT_FOCUS_LOST:
-                m_WindowEvents[EventWindow::WE_HIDE] = true;
-                break;
+                switch (event.window.event)
+                {
+                    case SDL_WINDOWEVENT_HIDDEN:
+                    case SDL_WINDOWEVENT_MINIMIZED:
+                    case SDL_WINDOWEVENT_FOCUS_LOST:
+                    {
+                        m_WindowEvents[EventWindow::WE_HIDE] = true;
+                    }
+                    break;
 
-            case SDL_WINDOWEVENT_SHOWN:
-            case SDL_WINDOWEVENT_FOCUS_GAINED:
-            case SDL_WINDOWEVENT_MAXIMIZED:
-            case SDL_WINDOWEVENT_RESTORED:
-                m_WindowEvents[EventWindow::WE_SHOW] = true;
-                break;
+                    case SDL_WINDOWEVENT_SHOWN:
+                    case SDL_WINDOWEVENT_FOCUS_GAINED:
+                    case SDL_WINDOWEVENT_MAXIMIZED:
+                    case SDL_WINDOWEVENT_RESTORED:
+                    {
+                        m_WindowEvents[EventWindow::WE_SHOW] = true;
+                    }
+                    break;
+                }
             }
             break;
         }
     }
 
     if (GetWindowEvent(EventWindow::WE_QUIT) == true || GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
+    {
         return UpdateStatus::UPDATE_STOP;
+    }
 
     return UpdateStatus::UPDATE_CONTINUE;
 }

@@ -73,7 +73,6 @@ bool ModuleRender::CleanUp()
 
 bool ModuleRender::Blit(size_t textureID, int x, int y, SDL_Rect* section, float scaleX, float scaleY, float speed)
 {
-    ASSERT(Engine::Instance()->m_Textures->GetTexture(textureID));
     SDL_Texture* texture = Engine::Instance()->m_Textures->GetTexture(textureID);
 
     if (texture == nullptr)

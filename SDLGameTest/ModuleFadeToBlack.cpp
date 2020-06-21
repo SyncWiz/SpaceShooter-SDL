@@ -28,10 +28,15 @@ UpdateStatus ModuleFadeToBlack::Update()
         float normalized = (float)now / (float)m_TotalTime;
 
         if (normalized > 1.0f)
+        {
             normalized = 1.0f;
+        }
+
 
         if (m_FadingIn == false)
+        {
             normalized = 1.0f - normalized;
+        }
 
         SDL_SetRenderDrawColor(Engine::Instance()->m_Renderer->m_Renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
         SDL_RenderFillRect(Engine::Instance()->m_Renderer->m_Renderer, NULL);
@@ -47,7 +52,9 @@ UpdateStatus ModuleFadeToBlack::Update()
             if (m_FadingIn == true)
             {
                 if (m_SceneOff != nullptr)
+                {
                     m_SceneOff->Disable();
+                }
                 m_SceneOn->Enable();
 
                 m_TotalTime += m_TotalTime;
@@ -70,8 +77,8 @@ void ModuleFadeToBlack::FadeToBlack(Scene* sceneOn, Scene* sceneOff, float time)
     m_StartTime = SDL_GetTicks();
     m_TotalTime = (Uint32)(time * 0.5f * 1000.0f);
 
-    this->m_SceneOn = sceneOn;
-    this->m_SceneOff = sceneOff;
+    m_SceneOn = sceneOn;
+    m_SceneOff = sceneOff;
 }
 
 bool ModuleFadeToBlack::IsFading() const

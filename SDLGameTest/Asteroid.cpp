@@ -97,8 +97,8 @@ void Asteroid::Update()
 
         default:
         {
-            ASSERT(false);
             LOG("Invalid Asteroid State!");
+            ASSERT(false);
         }
         break;
     }

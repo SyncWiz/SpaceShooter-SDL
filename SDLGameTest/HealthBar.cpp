@@ -16,11 +16,10 @@ void HealthBar::Update()
         yPosition -= MAIN_GAME_CAMERA_SPEED;
     }
 
+    m_Position.y = yPosition;
     for (int i = 0; i < m_Player->GetLifePoints(); ++i)
     {
         Engine::Instance()->m_Renderer->Blit(m_EntityTextureID, m_Position.x + (i * m_HeartSize), m_Position.y, nullptr, 0.1f, 0.1f);
     }
-
-    m_Position.y = yPosition;
 }
 

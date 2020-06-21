@@ -77,10 +77,15 @@ UpdateStatus ModuleCollision::Update()
 
 #ifdef _DEBUG
     if (Engine::Instance()->m_Input->GetKey(SDL_SCANCODE_F1) == KeyState::KEY_DOWN)
+    {
         m_ShowDebug = !m_ShowDebug;
+    }
 
     if (m_ShowDebug == true)
+    {
         DebugDraw();
+    }
+
 #endif
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -102,22 +107,44 @@ void ModuleCollision::DebugDraw()
         {
             continue;
         }
+
         switch ((*it)->m_Type)
         {
-        case ColliderType::COLLIDER_PLAYER:
-            Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 255, 255, 80);
+            case ColliderType::COLLIDER_NONE:
+            {
+                //DO NOTHING
+            }
             break;
 
-        case ColliderType::COLLIDER_ENEMY:
-            Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 0, 0, 80);
+            case ColliderType::COLLIDER_PLAYER:
+            {
+                Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 255, 255, 80);
+            }
             break;
 
-        case ColliderType::COLLIDER_BULLET_PLAYER:
-            Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 0, 255, 0, 80);
+            case ColliderType::COLLIDER_ENEMY:
+            {
+                Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 0, 0, 80);
+            }
             break;
 
-        case ColliderType::COLLIDER_BULLET_ENEMY:
-            Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 0, 0, 80);
+            case ColliderType::COLLIDER_BULLET_PLAYER:
+            {
+                Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 0, 255, 0, 80);
+            }
+            break;
+
+            case ColliderType::COLLIDER_BULLET_ENEMY:
+            {
+                Engine::Instance()->m_Renderer->DrawQuad((*it)->m_Rect, 255, 0, 0, 80);
+            }
+            break;
+
+            default:
+            {
+                LOG("Invalid ColliderType!");
+                ASSERT(false);
+            }
             break;
         }
     }

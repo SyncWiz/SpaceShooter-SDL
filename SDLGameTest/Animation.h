@@ -30,12 +30,12 @@ public:
 
     SDL_Rect& GetCurrentFrame()
     {
-        float last_frame = (float)m_Frames.size();
+        float lastFrame = (float)m_Frames.size();
 
         m_CurrentFrame += m_Speed;
-        if (m_CurrentFrame >= last_frame)
+        if (m_CurrentFrame >= lastFrame)
         {
-            m_CurrentFrame = (m_Loop) ? 0.0f : MAX(last_frame - 1.0f, 0.0f);
+            m_CurrentFrame = (m_Loop) ? 0.0f : MAX(lastFrame - 1.0f, 0.0f);
             m_Loops++;
         }
 

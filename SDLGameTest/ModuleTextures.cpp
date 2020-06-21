@@ -26,6 +26,7 @@ bool ModuleTextures::Init()
     if ((init & flags) != flags)
     {
         LOG("Could not initialize Image lib. IMG_Init: %s", IMG_GetError());
+        ASSERT(false);
         ret = false;
     }
 
@@ -64,8 +65,8 @@ size_t const ModuleTextures::LoadOrGet(const char* path)
 
     if (surface == nullptr)
     {
-        ASSERT(surface != nullptr);
         LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
+        return 0;
     }
     else
     {
@@ -89,21 +90,4 @@ size_t const ModuleTextures::LoadOrGet(const char* path)
 SDL_Texture* ModuleTextures::GetTexture(size_t textureID)
 {
     return m_Textures[textureID];
-}
-
-void ModuleTextures::Unload(SDL_Texture* texture)
-{
-    ASSERT(texture);
-    if (texture != nullptr)
-    {
-        for (unordered_map<size_t, SDL_Texture*>::iterator it = m_Textures.begin(); it != m_Textures.end(); ++it)
-        {
-            if (it->second && it->second == texture)
-            {
-                SDL_DestroyTexture(it->second);
-                m_Textures.erase(it);
-                break;
-            }
-        }
-    }
 }

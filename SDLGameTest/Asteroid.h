@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "Entity.h"
 
 struct Collider;
@@ -46,7 +44,7 @@ private:
     int m_Speed = 0;
     iPoint m_Direction{ 0 , 0 };
     iPoint m_TargetPosition{ 0, 0 };
-    const char* m_ExplosionTexturePath;
+    const char* m_ExplosionTexturePath = nullptr;
     AsteroidState m_CurrentState = AsteroidState::IDLE;
 
     // Assets IDs

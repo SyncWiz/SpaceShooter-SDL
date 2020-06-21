@@ -94,7 +94,6 @@ bool ModuleAudio::PlayMusic(const char* path, float fadeTime)
     if (m_Music == nullptr)
     {
         LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
-        ASSERT(false);
         ret = false;
     }
     else
@@ -104,7 +103,6 @@ bool ModuleAudio::PlayMusic(const char* path, float fadeTime)
             if (Mix_FadeInMusic(m_Music, -1, (int)(fadeTime * 1000.0f)) < 0)
             {
                 LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
-                ASSERT(false);
                 ret = false;
             }
         }
@@ -113,7 +111,6 @@ bool ModuleAudio::PlayMusic(const char* path, float fadeTime)
             if (Mix_PlayMusic(m_Music, -1) < 0)
             {
                 LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
-                ASSERT(false);
                 ret = false;
             }
         }
@@ -159,6 +156,7 @@ size_t ModuleAudio::LoadOrGetSoundEffect(const char* path)
     if (chunk == nullptr)
     {
         LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
+        return 0;
     }
     else
     {

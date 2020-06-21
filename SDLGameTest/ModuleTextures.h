@@ -16,8 +16,10 @@ public:
     bool CleanUp() override;
 
     size_t const LoadOrGet(const char* path);
+
+private:
+    friend class ModuleRender;
     SDL_Texture* GetTexture(size_t textureID);
-    void Unload(SDL_Texture* texture);
 
 private:
     std::unordered_map<size_t, SDL_Texture*> m_Textures;
