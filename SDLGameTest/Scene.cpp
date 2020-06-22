@@ -34,6 +34,7 @@ bool Scene::Start()
 
     if (Engine::Instance()->m_Audio->PlayMusic("Assets/Sounds/MainSound.ogg") == false)
     {
+        LOG("Couldn't Play Main Game Music");
         return false;
     }
 
